@@ -16,6 +16,8 @@
 3. ✅ If exists: Read it, continue that session
 4. ✅ If not: Create new session (increment letter: A→B→C or new date)
 
+**Note:** Current workflow assumes single-agent mode. For multi-agent scenarios (e.g., Cursor 2.0), see analysis in Session "Getting the Developer Up to Speed" or use agent-specific session files (`SESSION_YYYY_MM_DD_X_AGENT_NAME.md`).
+
 **During session:**
 - Use SESSION file as scratchpad freely
 - Git commit after each logical unit
@@ -269,6 +271,17 @@ This project is **using its own workflow to build itself**. Ultimate validation!
 - [ ] GitLab CI integration
 - [ ] Jira/Linear/etc. issue tracker sync
 - [ ] Slack/Discord notifications
+
+**4.5 Multi-Agent Coordination (Future)**
+- [ ] Add agent ID/name tracking to session creation
+- [ ] Support agent-specific session files (`SESSION_YYYY_MM_DD_X_AGENT.md`)
+- [ ] Implement agent coordination primitives in CLI
+- [ ] Add `roadmapper agents` command (list active agents, assign tasks)
+- [ ] Agent-aware history tracking (who did what)
+- [ ] Session file merging utility (combine agent sessions when archiving)
+- [ ] Work assignment system (assign tasks to specific agents)
+- [ ] Agent lock/coordination mechanism (prevent conflicts)
+- [ ] Multi-agent status display (show all active agents)
 
 **Success Criteria:**
 - Works seamlessly with major AI IDEs

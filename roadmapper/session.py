@@ -16,9 +16,14 @@ def create_session(name: Optional[str] = None) -> Path:
     
     Args:
         name: Optional custom session name. If not provided, uses date-based naming.
+            For multi-agent scenarios, include agent identifier in name (e.g., "agent1").
     
     Returns:
         Path to the created session file
+    
+    Note:
+        Current implementation assumes single-agent mode. Multi-agent support with
+        agent tracking and coordination is planned for Phase 4.
     """
     ensure_utf8_console()
     cwd = Path.cwd()

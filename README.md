@@ -110,6 +110,8 @@ AI assistants (like Cursor) are instructed to:
 4. Update documentation as work progresses
 5. Maintain context across sessions
 
+**Multi-Agent Support:** The workflow supports single-agent mode by default. For multi-agent scenarios (e.g., Cursor 2.0), use agent-specific session files (`SESSION_YYYY_MM_DD_X_AGENT_NAME.md`) or coordinate via git branches. Full multi-agent support planned for Phase 4.
+
 ---
 
 ## 🤯 The Meta Moment
