@@ -2,6 +2,8 @@
 
 **Using ProjectRoadmapper on multiple computers on the same network**
 
+**Supported Platforms:** Windows, Mac, Linux (Ubuntu, etc.) - ProjectRoadmapper is fully cross-platform!
+
 ---
 
 ## Understanding How Data is Stored
