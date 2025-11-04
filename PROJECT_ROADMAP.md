@@ -284,6 +284,9 @@ This project is **using its own workflow to build itself**. Ultimate validation!
 - [ ] Work assignment system (assign tasks to specific agents)
 - [ ] Agent lock/coordination mechanism (prevent conflicts)
 - [ ] Multi-agent status display (show all active agents)
+- **Status:** ✅ Analyzed and documented (see Session "Getting the Developer Up to Speed")
+- **Current Workaround:** Manual coordination works (agent-specific files, git branches)
+- **Future:** Built-in support when multi-agent usage becomes common
 
 **Success Criteria:**
 - Works seamlessly with major AI IDEs
