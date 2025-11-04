@@ -51,7 +51,13 @@ def _get_roadmap_template(variant: str) -> str:
 1. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
 2. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
 3. ✅ If exists: Read it, continue that session
-4. ✅ If not: Create new session (increment letter: A→B→C or new date)
+4. ✅ If not: **Automatically create new session** (increment letter: A→B→C or new date)
+
+**Starting a new session (when user says "new session" or "start new session"):**
+- **Automatically archive** any existing `SESSION_*.md` file to `docs/archive/sessions/`
+- **Automatically create** new `SESSION_YYYY_MM_DD_X.md` file from template
+- **Automatically update** PROJECT_ROADMAP.md with brief summary of archived session
+- User should NEVER manually archive or copy templates - you do this automatically
 
 **During session:**
 - Use SESSION file as scratchpad freely
@@ -59,12 +65,13 @@ def _get_roadmap_template(variant: str) -> str:
 - Ask before deleting/major changes
 - Update working doc with progress
 
-**Session end:**
-- Update this roadmap briefly
-- Archive SESSION file to docs/archive/sessions/
+**Session end (when user says "end session" or "archive session"):**
+- Update this roadmap briefly with session summary
+- **Automatically archive** SESSION file to docs/archive/sessions/
+- **Automatically create** new session file if user wants to continue
 - Ensure git clean
 
-**Key principle:** Always in a session. Always grounded in roadmap. Commit frequently.
+**Key principle:** Always in a session. Always grounded in roadmap. Commit frequently. **YOU handle archiving and session creation automatically - never ask the user to do manual file operations.**
 
 **Template:** `docs/reference/SESSION_WORKING_TEMPLATE.md`
 
@@ -178,12 +185,13 @@ Use this space as scratchpad:
 
 ## 📝 Before Archiving This Session
 
-**Checklist:**
-- [ ] Update PROJECT_ROADMAP.md with session summary
-- [ ] All git commits made (git status clean)
-- [ ] Valuable insights added to roadmap if applicable
-- [ ] Archive this file to docs/archive/sessions/
-- [ ] Create new SESSION_YYYY_MM_DD_X.md for next session (if continuing)
+**When user wants to start a new session, YOU (the AI assistant) should automatically:**
+- Update PROJECT_ROADMAP.md with session summary
+- Check that all git commits are made (git status clean)
+- Archive this file to docs/archive/sessions/
+- Create new SESSION_YYYY_MM_DD_X.md for next session (if continuing)
+
+**User should NEVER manually archive or copy files - you handle this automatically.**
 
 ---
 

@@ -67,12 +67,13 @@ Use this space as scratchpad:
 
 ## 📝 Before Archiving This Session
 
-**Checklist:**
-- [ ] Update PROJECT_ROADMAP.md with session summary
-- [ ] All git commits made (git status clean)
-- [ ] Valuable insights added to roadmap if applicable
-- [ ] Archive this file to docs/archive/sessions/
-- [ ] Create new SESSION_YYYY_MM_DD_X.md for next session (if continuing)
+**When user wants to start a new session, YOU (the AI assistant) should automatically:**
+- Update PROJECT_ROADMAP.md with session summary
+- Check that all git commits are made (git status clean)
+- Archive this file to docs/archive/sessions/
+- Create new SESSION_YYYY_MM_DD_X.md for next session (if continuing)
+
+**User should NEVER manually archive or copy files - you handle this automatically.**
 
 ---
 
