@@ -43,21 +43,37 @@ ProjectRoadmapper helps you maintain context and momentum across multiple develo
 
 ## 🚀 Quick Start
 
-### Option 1: Use the Bootstrap Guide (Current)
+### For Existing Projects (Recommended)
 
-1. Copy `ROADMAP_CREATOR.md` to your project root
-2. Tell your AI assistant (Cursor, etc.):
-   ```
-   Read ROADMAP_CREATOR.md and set up the workflow for this project
-   ```
-3. Answer the Session 0 discovery questions
-4. Start working with full context preservation!
+**Step-by-step guide:** See [docs/QUICK_START.md](docs/QUICK_START.md) for detailed instructions.
 
-### Option 2: CLI Tool (Available Now!)
+**Quick version:**
+
+```bash
+# 1. Install from source (since we're in active development)
+cd /path/to/ProjectRoadmapper
+pip install -e .
+
+# 2. Navigate to your existing project
+cd /path/to/your/project
+
+# 3. Initialize (non-destructive - won't overwrite existing files)
+roadmapper init --no-git  # Use --no-git if you already have Git
+
+# 4. Create your first session
+roadmapper session
+
+# 5. Check status
+roadmapper status
+```
+
+**That's it!** Now tell your AI assistant: *"Read PROJECT_ROADMAP.md and continue the current session."*
+
+### For New Projects
 
 ```bash
 # Install
-pip install roadmapper
+pip install -e /path/to/ProjectRoadmapper  # Or wait for: pip install roadmapper
 
 # Initialize your project
 roadmapper init
