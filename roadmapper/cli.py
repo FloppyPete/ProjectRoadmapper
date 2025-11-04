@@ -18,6 +18,13 @@ from roadmapper.config import (
 )
 from roadmapper.paths import get_project_root
 from roadmapper.history import read_history, get_session_stats
+from roadmapper.projects import (
+    get_all_projects,
+    register_project,
+    unregister_project,
+    update_project_registry,
+    discover_projects,
+)
 
 
 @click.group()
@@ -290,6 +297,110 @@ def history_stats(since):
         click.echo(f"  Avg per week: {stats['avg_sessions_per_week']}")
     except Exception as e:
         click.echo(f"❌ Error getting stats: {e}", err=True)
+        sys.exit(1)
+
+
+@main.group()
+def projects():
+    """Manage and query multiple projects."""
+    pass
+
+
+@projects.command("list")
+def projects_list():
+    """List all registered projects."""
+    try:
+        projects = get_all_projects()
+        
+        if not projects:
+            click.echo("📁 No projects registered yet.")
+            click.echo("\n💡 Tip: Run 'roadmapper projects discover' to find projects automatically.")
+            return
+        
+        click.echo(f"📁 Registered Projects ({len(projects)}):\n")
+        
+        for proj in projects:
+            name = proj.get("name", "Unknown")
+            path = proj.get("path", "?")
+            health = proj.get("health", "unknown")
+            last_session = proj.get("last_session")
+            
+            # Health indicator
+            health_icons = {
+                "healthy": "✅",
+                "inactive": "⚠️",
+                "stale": "💤",
+                "unknown": "❓",
+            }
+            health_icon = health_icons.get(health, "❓")
+            
+            click.echo(f"  {health_icon} {name}")
+            click.echo(f"     Path: {path}")
+            
+            if last_session and last_session.get("date"):
+                date_str = last_session["date"][:10]  # YYYY-MM-DD
+                file_name = last_session.get("file", "?")
+                click.echo(f"     Last session: {date_str} ({file_name})")
+            else:
+                click.echo(f"     Last session: Never")
+            
+            click.echo()
+    except Exception as e:
+        click.echo(f"❌ Error listing projects: {e}", err=True)
+        sys.exit(1)
+
+
+@projects.command("register")
+@click.argument("path", type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path))
+@click.option("--name", help="Project name (defaults to directory name)")
+def projects_register(path, name):
+    """Register a project in the registry."""
+    try:
+        # Verify it's a roadmapper project
+        if not (path / "PROJECT_ROADMAP.md").exists() and not (path / ".roadmapper.toml").exists():
+            click.echo(f"⚠️  {path} doesn't appear to be a roadmapper project", err=True)
+            click.echo("   (missing PROJECT_ROADMAP.md or .roadmapper.toml)")
+            sys.exit(1)
+        
+        project_info = register_project(path, name)
+        click.echo(f"✅ Registered project: {project_info['name']}")
+        click.echo(f"   Path: {project_info['path']}")
+    except Exception as e:
+        click.echo(f"❌ Error registering project: {e}", err=True)
+        sys.exit(1)
+
+
+@projects.command("unregister")
+@click.argument("path", type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path))
+def projects_unregister(path):
+    """Unregister a project from the registry."""
+    try:
+        if unregister_project(path):
+            click.echo(f"✅ Unregistered project: {path}")
+        else:
+            click.echo(f"⚠️  Project not found in registry: {path}", err=True)
+            sys.exit(1)
+    except Exception as e:
+        click.echo(f"❌ Error unregistering project: {e}", err=True)
+        sys.exit(1)
+
+
+@projects.command("discover")
+def projects_discover():
+    """Discover and register projects automatically."""
+    try:
+        click.echo("🔍 Discovering projects...")
+        new_count = update_project_registry()
+        
+        if new_count > 0:
+            click.echo(f"✅ Discovered and registered {new_count} new project(s)")
+        else:
+            click.echo("📁 No new projects found")
+        
+        projects = get_all_projects()
+        click.echo(f"\n📊 Total registered projects: {len(projects)}")
+    except Exception as e:
+        click.echo(f"❌ Error discovering projects: {e}", err=True)
         sys.exit(1)
 
 

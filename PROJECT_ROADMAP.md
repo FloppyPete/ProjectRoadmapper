@@ -49,22 +49,27 @@
 
 ## 📊 Current Status
 
-**Project Health:** ✅ Phase 2 Complete - 🔵 Documentation & Developer Experience Work (Current)
+**Project Health:** ✅ Phase 2 Complete - 🔵 Phase 3 In Progress (3.1 Partial)
 
 **Phase Progress:**
 - ✅ Phase 0: Project Foundation (Complete - Session A)
 - ✅ Phase 1: Core Documentation & CLI Foundation (Complete - Session B)
 - ✅ Phase 2: Persistence & User Preferences (Complete - Session C)
-- 🔵 Documentation & Developer Experience (In Progress - Current Session)
-- 🔵 Phase 3: Cross-Project Intelligence (Next)
+- 🔵 Phase 3: Cross-Project Intelligence (In Progress - Session E)
+  - ✅ 3.1 Project Registry System (Complete)
+  - ✅ 3.1 `roadmapper projects` command (Complete)
+  - 🔵 3.1 `roadmapper search` command (Next)
+  - 🔵 3.2 Cross-Project Dashboard (Future)
+  - 🔵 3.3 Knowledge Base (Future)
 - 🔵 Phase 4: AI IDE Integration & Ecosystem
 
 **Key Metrics:**
 - Test coverage: TBD
 - User adoptions: TBD (starting with creator!)
-- Features implemented: ~15/42+ (Phases 0-2 complete, see phases below)
+- Features implemented: ~18/42+ (Phases 0-2 complete, Phase 3.1 partial)
 - Community contributions: TBD
 - Documentation: ✅ Comprehensive (troubleshooting, config guide, migration guide, CLI explanation)
+- Projects registry: ✅ Implemented (can discover, register, list projects)
 
 **Origin Story:**
 - Spun off from LocalAgent project (Nov 4, 2025)
@@ -214,10 +219,13 @@ This project is **using its own workflow to build itself**. Ultimate validation!
 ### From Option 1 Ideas
 
 **3.1 Cross-Project Query System**
-- [ ] Database/index of all projects using roadmapper
-- [ ] Implement `roadmapper projects` command
-  - List all tracked projects
-  - Show project status, last session, health
+- [x] Database/index of all projects using roadmapper ✅
+- [x] Implement `roadmapper projects` command ✅
+  - [x] List all tracked projects (`roadmapper projects list`)
+  - [x] Show project status, last session, health
+  - [x] Register projects (`roadmapper projects register`)
+  - [x] Unregister projects (`roadmapper projects unregister`)
+  - [x] Auto-discover projects (`roadmapper projects discover`)
 - [ ] Implement `roadmapper search` command
   - Search across all projects' sessions
   - Find similar problems/solutions
@@ -410,7 +418,19 @@ This was the signal: **Documentation → Software**
 
 ## 💡 Recent Sessions
 
-**Session 2025-11-04: Getting the Developer Up to Speed** 🔵 In Progress
+**Session 2025-11-04-E: Phase 3 Kickoff** 🔵 In Progress
+- Created `roadmapper/projects.py` - Project registry system with JSON storage
+- Implemented project discovery mechanism (scans common project locations)
+- Implemented `roadmapper projects` command group:
+  - `list` - List all registered projects with health status
+  - `register` - Manually register a project
+  - `unregister` - Remove project from registry
+  - `discover` - Auto-discover and register projects
+- Project health assessment (healthy/inactive/stale/unknown)
+- Last session tracking across projects
+- **Next:** Implement `roadmapper search` command for cross-project search
+
+**Session 2025-11-04: Getting the Developer Up to Speed** ✅ Complete
 - Analyzed multi-agent workflow impact (Cursor 2.0 compatibility)
 - Created comprehensive migration guide for existing projects
 - Created CLI explanation guide for non-programmers (docs/WHAT_IS_CLI.md)
