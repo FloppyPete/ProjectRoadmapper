@@ -25,6 +25,7 @@ from roadmapper.projects import (
     update_project_registry,
     discover_projects,
 )
+from roadmapper.search import search_projects
 
 
 @click.group()
@@ -401,6 +402,104 @@ def projects_discover():
         click.echo(f"\n📊 Total registered projects: {len(projects)}")
     except Exception as e:
         click.echo(f"❌ Error discovering projects: {e}", err=True)
+        sys.exit(1)
+
+
+@main.command("search")
+@click.argument("query")
+@click.option(
+    "--type",
+    "file_types",
+    multiple=True,
+    type=click.Choice(["session", "roadmap", "history"], case_sensitive=False),
+    help="File types to search (can specify multiple times)",
+)
+@click.option(
+    "--case-sensitive",
+    is_flag=True,
+    help="Case-sensitive search",
+)
+@click.option(
+    "--max-results",
+    type=int,
+    default=50,
+    help="Maximum number of results to show (default: 50)",
+)
+@click.option(
+    "--project",
+    "project_paths",
+    multiple=True,
+    type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path),
+    help="Specific projects to search (can specify multiple times)",
+)
+def search(query, file_types, case_sensitive, max_results, project_paths):
+    """Search across all registered projects."""
+    try:
+        # Convert project paths if provided
+        project_paths_list = list(project_paths) if project_paths else None
+        
+        # Convert file_types tuple to list
+        file_types_list = list(file_types) if file_types else None
+        
+        click.echo(f"🔍 Searching for: '{query}'\n")
+        
+        results = search_projects(
+            query=query,
+            project_paths=project_paths_list,
+            file_types=file_types_list,
+            case_sensitive=case_sensitive,
+            max_results=max_results,
+        )
+        
+        if not results:
+            click.echo("❌ No matches found")
+            return
+        
+        click.echo(f"✅ Found {len(results)} result(s)\n")
+        
+        # Group results by project
+        projects_dict = {}
+        for result in results:
+            project_key = str(result.project_path)
+            if project_key not in projects_dict:
+                projects_dict[project_key] = {
+                    "name": result.project_name,
+                    "path": result.project_path,
+                    "results": [],
+                }
+            projects_dict[project_key]["results"].append(result)
+        
+        # Display results
+        for project_key, project_data in projects_dict.items():
+            click.echo(f"📁 {project_data['name']}")
+            click.echo(f"   Path: {project_data['path']}\n")
+            
+            for result in project_data["results"]:
+                file_type_icon = {
+                    "session": "📝",
+                    "roadmap": "🗺️",
+                    "history": "📚",
+                }.get(result.file_type, "📄")
+                
+                relative_path = result.file_path.relative_to(result.project_path)
+                click.echo(f"   {file_type_icon} {relative_path} ({len(result.matches)} match{'es' if len(result.matches) > 1 else ''})")
+                
+                # Show first few matches with context
+                for i, (line_num, line_content) in enumerate(result.matches[:3]):
+                    # Truncate long lines
+                    display_line = line_content[:100] + "..." if len(line_content) > 100 else line_content
+                    click.echo(f"      Line {line_num + 1}: {display_line.strip()}")
+                
+                if len(result.matches) > 3:
+                    click.echo(f"      ... and {len(result.matches) - 3} more match(es)")
+                
+                click.echo()
+        
+        click.echo(f"\n💡 Tip: Use '--type session' to search only session files")
+        click.echo(f"💡 Tip: Use '--project <path>' to search specific projects")
+        
+    except Exception as e:
+        click.echo(f"❌ Error searching: {e}", err=True)
         sys.exit(1)
 
 
