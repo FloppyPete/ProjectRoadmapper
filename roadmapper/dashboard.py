@@ -297,7 +297,6 @@ def get_dashboard_template() -> str:
         
         <div class="metrics">
             <div class="metric-card">
-                <div class="metric-card">
                 <div class="metric-value">{{ metrics.total_projects }}</div>
                 <div class="metric-label">Total Projects</div>
             </div>
