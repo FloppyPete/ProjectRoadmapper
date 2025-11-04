@@ -178,7 +178,9 @@ def _print_config(config: dict, prefix: str = "") -> None:
         if isinstance(value, dict):
             section_name = f"{prefix}.{key}" if prefix else key
             click.echo(f"[{section_name}]")
-            _print_config(value, key)  # Pass just the key, not full prefix
+            # Recursively print nested config with updated prefix
+            new_prefix = f"{prefix}.{key}" if prefix else key
+            _print_config(value, new_prefix)
         else:
             key_name = f"{prefix}.{key}" if prefix else key
             if isinstance(value, str):

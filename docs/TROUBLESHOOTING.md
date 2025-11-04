@@ -186,6 +186,23 @@ print("📊 Status: OK")
 - Validate `pyproject.toml` before committing
 - Test installation on Windows before pushing
 
+### Configuration Issues
+
+**Problem:** Config values not persisting or not found
+
+**Solutions:**
+- Check scope: Use `roadmapper config list --scope global` and `--scope project` to see where values are stored
+- Remember precedence: project > global > defaults
+- Use dot notation for nested keys: `preferences.editor` not `preferences/editor`
+- Ensure TOML syntax is valid (no trailing commas, proper quotes)
+
+**Problem:** History not tracking sessions
+
+**Solutions:**
+- Ensure you're in a roadmapper project (has PROJECT_ROADMAP.md or .roadmapper.toml)
+- Check `.roadmapper/history.jsonl` exists and is writable
+- History is created automatically when sessions are created
+
 ---
 
 ## Reporting Issues

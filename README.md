@@ -126,26 +126,26 @@ This is the ultimate validation - dogfooding from day one.
 
 ## 📊 Roadmap
 
-### ✅ Phase 0: Project Foundation (Current - Nov 4, 2025)
+### ✅ Phase 0: Project Foundation (Complete)
 - Bootstrap new project structure
 - Capture all vision as actionable items
 - Set up GitHub repository
-- **Status**: In Progress
+- **Status**: Complete
 
-### 🔵 Phase 1: Core Documentation & CLI Foundation (Next)
-**Estimated: 2-3 weeks**
-- Finalize project identity and branding
-- Refactor documentation
-- Build Python CLI tool (`roadmapper init`, `session`, `status`)
-- Package for pip installation
+### ✅ Phase 1: Core Documentation & CLI Foundation (Complete)
+- Python CLI tool with `init`, `session`, `status` commands
+- Modern packaging with pyproject.toml
+- Windows encoding fixes
+- **Status**: Complete
 
-### 🔵 Phase 2: Persistence & User Preferences
-**Estimated: 2-3 weeks**
-- User config in `~/.roadmapper/`
-- Project-level settings
-- Session history and analytics
+### ✅ Phase 2: Persistence & User Preferences (Complete)
+- Global and project-level TOML configuration
+- `roadmapper config` command (set/get/list/reset)
+- Session history tracking and analytics
+- `roadmapper history` command (list/stats)
+- **Status**: Complete
 
-### 🔵 Phase 3: Cross-Project Intelligence
+### 🔵 Phase 3: Cross-Project Intelligence (Next)
 **Estimated: 3-4 weeks**
 - Cross-project search
 - Web-based dashboard

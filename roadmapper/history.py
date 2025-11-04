@@ -101,7 +101,13 @@ def read_history(
                 record = json.loads(line)
                 # Filter by date if specified
                 if since:
-                    record_date = datetime.fromisoformat(record["date"].replace("Z", "+00:00"))
+                    record_date_str = record["date"].replace("Z", "+00:00")
+                    record_date = datetime.fromisoformat(record_date_str)
+                    # Make both timezone-aware or both naive for comparison
+                    if record_date.tzinfo is None and since.tzinfo is not None:
+                        record_date = record_date.replace(tzinfo=since.tzinfo)
+                    elif record_date.tzinfo is not None and since.tzinfo is None:
+                        since = since.replace(tzinfo=record_date.tzinfo)
                     if record_date < since:
                         continue
                 records.append(record)
@@ -155,7 +161,15 @@ def get_session_stats(
     
     for record in records:
         try:
-            record_date = datetime.fromisoformat(record["date"].replace("Z", "+00:00"))
+            record_date_str = record["date"].replace("Z", "+00:00")
+            record_date = datetime.fromisoformat(record_date_str)
+            # Make timezone-aware if needed for comparison
+            if record_date.tzinfo is None:
+                record_date = record_date.replace(tzinfo=now.tzinfo if now.tzinfo else None)
+            if record_date.tzinfo and now.tzinfo is None:
+                now = now.replace(tzinfo=record_date.tzinfo)
+                week_ago = week_ago.replace(tzinfo=record_date.tzinfo)
+                month_ago = month_ago.replace(tzinfo=record_date.tzinfo)
             if record_date >= week_ago:
                 last_7_days += 1
             if record_date >= month_ago:
@@ -165,7 +179,13 @@ def get_session_stats(
     
     # Calculate average sessions per week
     if records:
-        first_date = datetime.fromisoformat(records[-1]["date"].replace("Z", "+00:00"))
+        first_date_str = records[-1]["date"].replace("Z", "+00:00")
+        first_date = datetime.fromisoformat(first_date_str)
+        # Make timezone-aware if needed
+        if first_date.tzinfo is None and now.tzinfo is not None:
+            first_date = first_date.replace(tzinfo=now.tzinfo)
+        elif first_date.tzinfo is not None and now.tzinfo is None:
+            now = now.replace(tzinfo=first_date.tzinfo)
         days_span = (now - first_date).days
         if days_span > 0:
             avg_per_week = (total / days_span) * 7
