@@ -196,35 +196,66 @@ The workflow is **resilient enough** to handle this change, but would benefit fr
 **Answer:** **Optional, but recommended for benefits**
 
 **What Changed:**
-1. CLI tool (`roadmapper` commands)
+1. CLI tool (`roadmapper` commands) - *See explanation below*
 2. Configuration system (global/project TOML)
 3. History tracking (automatic analytics)
 4. Enhanced documentation (multi-agent notes)
 5. Workflow improvements (error handling, Windows support)
 
+**What is a CLI? (Simple Explanation)**
+
+**CLI = Command Line Interface**
+
+Think of it like this:
+- **GUI (Graphical User Interface)** = Clicking buttons and menus (like Windows File Explorer)
+- **CLI** = Typing commands in a terminal/command prompt
+
+**Example:**
+- **GUI way:** Open File Explorer, navigate to folder, right-click, create new file
+- **CLI way:** Type `roadmapper session` in terminal, press Enter
+
+**For This Project:**
+Instead of manually creating session files, you can type:
+```bash
+roadmapper session
+```
+And it automatically creates `SESSION_2025_11_04_E.md` for you.
+
+**Why Use CLI?**
+- **Faster** - One command instead of multiple steps
+- **Automatic** - No manual file naming or copying
+- **Consistent** - Always creates files the same way
+- **Extra features** - History tracking, analytics, configuration
+
+**You Don't Need It:**
+- Your current workflow (manually creating files) works perfectly fine
+- CLI is just a convenience tool
+- You can keep doing things manually if you prefer
+
 **Upgrade Options:**
 
 **Option 1: Minimal (5 minutes) - Recommended**
 - Add multi-agent note to PROJECT_ROADMAP.md
-- Keep existing manual workflow
-- No CLI migration needed
+- Keep existing manual workflow (no CLI needed)
 - **Result:** Project stays compatible, gets multi-agent guidance
+- **What you do:** Keep creating session files manually like you do now
 
 **Option 2: Full CLI Migration (15 minutes)**
-- Install roadmapper CLI
-- Run `roadmapper init --no-git` (non-destructive)
-- Start using CLI commands
-- **Result:** Get all Phase 2 features (config, history, analytics)
+- Install roadmapper CLI (typing commands instead of manual files)
+- Run `roadmapper init --no-git` (one-time setup)
+- Start using CLI commands (`roadmapper session`, `roadmapper status`)
+- **Result:** Get automation and analytics features
+- **What you do:** Type commands instead of manually creating files
 
 **Option 3: Hybrid**
 - Install CLI but use selectively
 - Keep manual workflow for most things
-- Use CLI for convenience (session creation, status)
+- Use CLI for convenience (like automatic session creation)
 
 **Recommendation:**
-- **Start with Option 1** (add multi-agent note)
-- **Consider Option 2 later** when convenient
-- Existing workflow continues to work either way
+- **Start with Option 1** (add multi-agent note, keep manual workflow)
+- **Consider Option 2 later** if you want automation
+- Your current manual workflow continues to work either way
 
 **Created:** `docs/MIGRATION_GUIDE.md` with full details
 

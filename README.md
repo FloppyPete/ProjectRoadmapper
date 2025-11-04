@@ -207,6 +207,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Roadmap**: [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md)
 - **Troubleshooting**: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 - **Migration Guide**: [docs/MIGRATION_GUIDE.md](docs/MIGRATION_GUIDE.md) (for upgrading existing projects)
+- **What is CLI?**: [docs/WHAT_IS_CLI.md](docs/WHAT_IS_CLI.md) (simple explanation for non-programmers)
 - **Origin Project**: [LocalAgent](https://github.com/FloppyPete/LocalAgent)
 
 ---

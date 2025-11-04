@@ -2,6 +2,8 @@
 
 **For projects using the workflow before ProjectRoadmapper CLI tool**
 
+**Don't know what CLI is?** See [WHAT_IS_CLI.md](WHAT_IS_CLI.md) for a simple explanation.
+
 ---
 
 ## What Changed?
