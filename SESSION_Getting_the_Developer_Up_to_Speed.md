@@ -189,6 +189,47 @@ The workflow is **resilient enough** to handle this change, but would benefit fr
 
 ---
 
+### LocalAgent Project Upgrade Analysis
+
+**Question:** Do I need to upgrade the original LocalAgent project that spawned this?
+
+**Answer:** **Optional, but recommended for benefits**
+
+**What Changed:**
+1. CLI tool (`roadmapper` commands)
+2. Configuration system (global/project TOML)
+3. History tracking (automatic analytics)
+4. Enhanced documentation (multi-agent notes)
+5. Workflow improvements (error handling, Windows support)
+
+**Upgrade Options:**
+
+**Option 1: Minimal (5 minutes) - Recommended**
+- Add multi-agent note to PROJECT_ROADMAP.md
+- Keep existing manual workflow
+- No CLI migration needed
+- **Result:** Project stays compatible, gets multi-agent guidance
+
+**Option 2: Full CLI Migration (15 minutes)**
+- Install roadmapper CLI
+- Run `roadmapper init --no-git` (non-destructive)
+- Start using CLI commands
+- **Result:** Get all Phase 2 features (config, history, analytics)
+
+**Option 3: Hybrid**
+- Install CLI but use selectively
+- Keep manual workflow for most things
+- Use CLI for convenience (session creation, status)
+
+**Recommendation:**
+- **Start with Option 1** (add multi-agent note)
+- **Consider Option 2 later** when convenient
+- Existing workflow continues to work either way
+
+**Created:** `docs/MIGRATION_GUIDE.md` with full details
+
+---
+
 ### Future Enhancements (Add to Phase 4 Roadmap)
 
 **Multi-Agent Support Features:**
@@ -229,6 +270,7 @@ The workflow is **resilient enough** to handle this change, but would benefit fr
 **In Progress:**
 - Developer onboarding documentation
 - Development setup guides
+- Migration guide for original LocalAgent project
 
 **Deferred:**
 - Architecture documentation (pending)
