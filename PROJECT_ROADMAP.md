@@ -49,24 +49,24 @@
 
 ## 📊 Current Status
 
-**Project Health:** ✅ Phase 2 Complete - 🔵 Phase 3 In Progress (3.1 Partial)
+**Project Health:** ✅ Phase 3.1 Complete - 🔵 Phase 3.2 Next
 
 **Phase Progress:**
 - ✅ Phase 0: Project Foundation (Complete - Session A)
 - ✅ Phase 1: Core Documentation & CLI Foundation (Complete - Session B)
 - ✅ Phase 2: Persistence & User Preferences (Complete - Session C)
-- 🔵 Phase 3: Cross-Project Intelligence (In Progress - Session E)
+- 🔵 Phase 3: Cross-Project Intelligence (3.1 Complete - Session E)
   - ✅ 3.1 Project Registry System (Complete)
   - ✅ 3.1 `roadmapper projects` command (Complete)
-  - 🔵 3.1 `roadmapper search` command (Next)
-  - 🔵 3.2 Cross-Project Dashboard (Future)
+  - ✅ 3.1 `roadmapper search` command (Complete)
+  - 🔵 3.2 Cross-Project Dashboard (Next)
   - 🔵 3.3 Knowledge Base (Future)
 - 🔵 Phase 4: AI IDE Integration & Ecosystem
 
 **Key Metrics:**
 - Test coverage: TBD
 - User adoptions: TBD (starting with creator!)
-- Features implemented: ~18/42+ (Phases 0-2 complete, Phase 3.1 partial)
+- Features implemented: ~20/42+ (Phases 0-2 complete, Phase 3.1 complete)
 - Community contributions: TBD
 - Documentation: ✅ Comprehensive (troubleshooting, config guide, migration guide, CLI explanation)
 - Projects registry: ✅ Implemented (can discover, register, list projects)
@@ -226,10 +226,14 @@ This project is **using its own workflow to build itself**. Ultimate validation!
   - [x] Register projects (`roadmapper projects register`)
   - [x] Unregister projects (`roadmapper projects unregister`)
   - [x] Auto-discover projects (`roadmapper projects discover`)
-- [ ] Implement `roadmapper search` command
-  - Search across all projects' sessions
-  - Find similar problems/solutions
-  - "Have I solved this before?"
+- [x] Implement `roadmapper search` command ✅
+  - [x] Search across all projects' sessions
+  - [x] Search roadmaps and history
+  - [x] Filter by file type (`--type session|roadmap|history`)
+  - [x] Filter by specific projects (`--project`)
+  - [x] Case-sensitive option (`--case-sensitive`)
+  - [x] Find similar problems/solutions
+  - [x] "Have I solved this before?"
 
 **3.2 Cross-Project Dashboard**
 - [ ] Web-based dashboard (optional local server)
@@ -418,7 +422,7 @@ This was the signal: **Documentation → Software**
 
 ## 💡 Recent Sessions
 
-**Session 2025-11-04-E: Phase 3 Kickoff** 🔵 In Progress
+**Session 2025-11-04-E: Phase 3.1 Complete** ✅ Complete
 - Created `roadmapper/projects.py` - Project registry system with JSON storage
 - Implemented project discovery mechanism (scans common project locations)
 - Implemented `roadmapper projects` command group:
@@ -428,7 +432,9 @@ This was the signal: **Documentation → Software**
   - `discover` - Auto-discover and register projects
 - Project health assessment (healthy/inactive/stale/unknown)
 - Last session tracking across projects
-- **Next:** Implement `roadmapper search` command for cross-project search
+- Created `roadmapper/search.py` - Cross-project search functionality
+- Implemented `roadmapper search` command with filtering options
+- **Phase 3.1 Complete** - All cross-project query features working
 
 **Session 2025-11-04: Getting the Developer Up to Speed** ✅ Complete
 - Analyzed multi-agent workflow impact (Cursor 2.0 compatibility)
