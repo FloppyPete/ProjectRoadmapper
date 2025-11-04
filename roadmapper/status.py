@@ -6,6 +6,8 @@ from datetime import datetime
 import re
 
 from roadmapper.utils import ensure_utf8_console
+from roadmapper.history import get_session_stats
+from roadmapper.paths import get_project_root
 
 
 def show_status() -> None:
@@ -32,6 +34,16 @@ def show_status() -> None:
             print("\n📚 Recent Sessions:")
             for session_file in session_files[1:6]:  # Show up to 5 more
                 print(f"   - {session_file.name}")
+        
+        # Show session stats if available
+        project_root = get_project_root()
+        if project_root:
+            try:
+                stats = get_session_stats(project_root=project_root)
+                if stats["total_sessions"] > 0:
+                    print(f"\n📈 Activity: {stats['sessions_last_7_days']} sessions in last 7 days")
+            except Exception:
+                pass  # Silently fail if stats unavailable
     else:
         print("📝 Current Session: None")
         print("   💡 Run 'roadmapper session' to create a session")

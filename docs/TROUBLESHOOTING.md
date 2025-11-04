@@ -202,5 +202,52 @@ If you encounter an issue not covered here:
 
 ---
 
-**Last Updated:** November 4, 2025 (Session 2025-11-04-B)
+## Configuration Issues
+
+### TOML Package Not Found
+
+**Problem:**
+```
+ImportError: TOML support requires 'tomli' package
+```
+
+**Solution:**
+Install the required TOML packages:
+```bash
+pip install tomli tomli-w
+```
+
+Or install all dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+**Status:** ✅ Fixed - Dependencies listed in requirements.txt
+
+### Configuration File Not Found
+
+**Problem:**
+`roadmapper config get` returns "not found" even though you set a value.
+
+**Solution:**
+- Check you're in a roadmapper project (run `roadmapper status`)
+- Verify the key uses dot notation (e.g., `preferences.editor`)
+- Use `roadmapper config list` to see available keys
+
+### Invalid TOML Syntax
+
+**Problem:**
+Configuration file can't be parsed.
+
+**Solution:**
+- Don't manually edit TOML files unless you know the syntax
+- Use `roadmapper config set` instead
+- Check for common errors:
+  - Missing quotes around strings
+  - Invalid section headers
+  - Trailing commas
+
+---
+
+**Last Updated:** November 4, 2025 (Session 2025-11-04-C)
 

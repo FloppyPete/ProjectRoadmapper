@@ -27,15 +27,14 @@ ProjectRoadmapper helps you maintain context and momentum across multiple develo
 
 ## ✨ Features
 
-### Current (Phase 0 - Foundation)
+### Current (Phase 1 & 2)
 - ✅ **ROADMAP_CREATOR.md** - Complete bootstrap guide (795 lines, battle-tested)
-- ✅ **Session 0 workflow** - Guided project discovery
-- ✅ **GitHub CLI integration** - Automatic repository setup
-- ✅ **AI-friendly templates** - Works great with Cursor and similar tools
+- ✅ **CLI Tool** - `roadmapper init`, `roadmapper session`, `roadmapper status`
+- ✅ **Configuration** - Global and project-level TOML config with `roadmapper config`
+- ✅ **Session History** - Track sessions with `roadmapper history`
+- ✅ **Analytics** - View session statistics and activity trends
 
 ### Planned (See [Roadmap](#roadmap))
-- 🔜 **CLI Tool** - `roadmapper init`, `roadmapper session`, `roadmapper status`
-- 🔜 **Persistent Storage** - User preferences, project history
 - 🔜 **Cross-Project Intelligence** - Search across all your projects
 - 🔜 **Dashboard** - Visual overview of all projects
 - 🔜 **AI IDE Integrations** - Native Cursor/Copilot extensions
@@ -54,7 +53,7 @@ ProjectRoadmapper helps you maintain context and momentum across multiple develo
 3. Answer the Session 0 discovery questions
 4. Start working with full context preservation!
 
-### Option 2: CLI Tool (Coming Soon - Phase 1)
+### Option 2: CLI Tool (Available Now!)
 
 ```bash
 # Install
@@ -68,6 +67,14 @@ roadmapper session
 
 # Check status
 roadmapper status
+
+# Configure preferences
+roadmapper config set preferences.editor "code"
+roadmapper config set preferences.ai_assistant "cursor"
+
+# View session history
+roadmapper history list
+roadmapper history stats
 ```
 
 ---

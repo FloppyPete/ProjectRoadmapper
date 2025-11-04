@@ -6,6 +6,8 @@ from typing import Optional
 import re
 
 from roadmapper.utils import ensure_utf8_console, read_text_file, write_text_file
+from roadmapper.history import log_session
+from roadmapper.paths import get_project_root
 
 
 def create_session(name: Optional[str] = None) -> Path:
@@ -97,6 +99,10 @@ def create_session(name: Optional[str] = None) -> Path:
     
     # Write session file with UTF-8 encoding
     write_text_file(session_path, template_content)
+    
+    # Log session creation to history
+    project_root = get_project_root()
+    log_session(session_path, project_root=project_root)
     
     return session_path
 
