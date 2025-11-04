@@ -26,6 +26,13 @@ from roadmapper.projects import (
     discover_projects,
 )
 from roadmapper.search import search_projects
+from roadmapper.knowledge import (
+    index_all_projects,
+    search_knowledge,
+    get_knowledge_by_topic,
+    get_related_discoveries,
+    load_knowledge,
+)
 
 
 @click.group()
@@ -463,6 +470,158 @@ def dashboard(host, port, open_browser):
         click.echo("\n\n👋 Dashboard server stopped")
     except Exception as e:
         click.echo(f"❌ Error starting dashboard: {e}", err=True)
+        sys.exit(1)
+
+
+@main.group()
+def knowledge():
+    """Query knowledge base extracted from sessions."""
+    pass
+
+
+@knowledge.command("index")
+def knowledge_index():
+    """Extract and index knowledge from all projects."""
+    try:
+        click.echo("🔍 Indexing knowledge from all projects...")
+        new_count = index_all_projects()
+        
+        if new_count > 0:
+            click.echo(f"✅ Indexed {new_count} new knowledge entries")
+        else:
+            click.echo("📚 No new knowledge found (already indexed)")
+        
+        total = len(load_knowledge())
+        click.echo(f"\n📊 Total knowledge entries: {total}")
+    except Exception as e:
+        click.echo(f"❌ Error indexing knowledge: {e}", err=True)
+        sys.exit(1)
+
+
+@knowledge.command("search")
+@click.argument("query")
+@click.option(
+    "--type",
+    "knowledge_type",
+    type=click.Choice(["discovery", "accomplishment", "insight"], case_sensitive=False),
+    help="Filter by knowledge type",
+)
+@click.option(
+    "--limit",
+    type=int,
+    default=20,
+    help="Maximum number of results (default: 20)",
+)
+def knowledge_search(query, knowledge_type, limit):
+    """Search knowledge base."""
+    try:
+        results = search_knowledge(query, knowledge_type)
+        
+        if not results:
+            click.echo(f"❌ No knowledge found for: '{query}'")
+            click.echo("\n💡 Tip: Run 'roadmapper knowledge index' to extract knowledge from projects")
+            return
+        
+        # Limit results
+        results = results[:limit]
+        
+        click.echo(f"📚 Found {len(results)} knowledge entries for: '{query}'\n")
+        
+        for i, entry in enumerate(results, 1):
+            entry_type = entry.get("type", "unknown")
+            content = entry.get("content", "")
+            project = entry.get("project", "Unknown")
+            session_file = entry.get("session_file", "?")
+            
+            type_icons = {
+                "discovery": "💡",
+                "accomplishment": "✅",
+                "insight": "🔍",
+            }
+            icon = type_icons.get(entry_type, "📝")
+            
+            click.echo(f"{i}. {icon} [{entry_type}] {project}")
+            click.echo(f"   {content[:100]}{'...' if len(content) > 100 else ''}")
+            click.echo(f"   Session: {session_file}\n")
+        
+        if len(search_knowledge(query, knowledge_type)) > limit:
+            click.echo(f"... and {len(search_knowledge(query, knowledge_type)) - limit} more results")
+    
+    except Exception as e:
+        click.echo(f"❌ Error searching knowledge: {e}", err=True)
+        sys.exit(1)
+
+
+@knowledge.command("learn")
+@click.argument("topic")
+def knowledge_learn(topic):
+    """Answer: 'What did I learn about X?'"""
+    try:
+        results = get_knowledge_by_topic(topic)
+        
+        if not results:
+            click.echo(f"❌ No knowledge found about: '{topic}'")
+            click.echo("\n💡 Tip: Run 'roadmapper knowledge index' to extract knowledge from projects")
+            return
+        
+        click.echo(f"📚 What you learned about '{topic}':\n")
+        
+        # Group by project
+        by_project = {}
+        for entry in results:
+            project = entry.get("project", "Unknown")
+            if project not in by_project:
+                by_project[project] = []
+            by_project[project].append(entry)
+        
+        for project, entries in by_project.items():
+            click.echo(f"📁 {project} ({len(entries)} entries):")
+            for entry in entries[:5]:  # Show up to 5 per project
+                content = entry.get("content", "")
+                click.echo(f"  • {content[:80]}{'...' if len(content) > 80 else ''}")
+            if len(entries) > 5:
+                click.echo(f"  ... and {len(entries) - 5} more")
+            click.echo()
+    
+    except Exception as e:
+        click.echo(f"❌ Error querying knowledge: {e}", err=True)
+        sys.exit(1)
+
+
+@knowledge.command("stats")
+def knowledge_stats():
+    """Show knowledge base statistics."""
+    try:
+        knowledge = load_knowledge()
+        
+        if not knowledge:
+            click.echo("📚 Knowledge base is empty")
+            click.echo("\n💡 Tip: Run 'roadmapper knowledge index' to extract knowledge from projects")
+            return
+        
+        # Count by type
+        by_type = {}
+        by_project = {}
+        
+        for entry in knowledge:
+            entry_type = entry.get("type", "unknown")
+            project = entry.get("project", "Unknown")
+            
+            by_type[entry_type] = by_type.get(entry_type, 0) + 1
+            by_project[project] = by_project.get(project, 0) + 1
+        
+        click.echo("📊 Knowledge Base Statistics\n")
+        click.echo(f"Total entries: {len(knowledge)}")
+        click.echo(f"\nBy type:")
+        for entry_type, count in sorted(by_type.items()):
+            click.echo(f"  {entry_type}: {count}")
+        
+        click.echo(f"\nBy project (top 10):")
+        for project, count in sorted(by_project.items(), key=lambda x: x[1], reverse=True)[:10]:
+            click.echo(f"  {project}: {count}")
+    
+    except Exception as e:
+        click.echo(f"❌ Error getting stats: {e}", err=True)
         sys.exit(1)
 
 
