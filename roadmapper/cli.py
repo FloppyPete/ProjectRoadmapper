@@ -405,6 +405,67 @@ def projects_discover():
         sys.exit(1)
 
 
+@main.command("dashboard")
+@click.option(
+    "--host",
+    default="127.0.0.1",
+    help="Host to bind to (default: 127.0.0.1)",
+)
+@click.option(
+    "--port",
+    type=int,
+    default=5000,
+    help="Port to bind to (default: 5000)",
+)
+@click.option(
+    "--open",
+    "open_browser",
+    is_flag=True,
+    help="Open browser automatically",
+)
+def dashboard(host, port, open_browser):
+    """Start web dashboard server."""
+    try:
+        # Try to import Flask
+        try:
+            from flask import Flask, render_template_string
+        except ImportError:
+            click.echo("❌ Flask is required for dashboard. Install it with:", err=True)
+            click.echo("   pip install flask", err=True)
+            click.echo("\nOr install roadmapper with dashboard support:", err=True)
+            click.echo("   pip install 'roadmapper[dashboard]'", err=True)
+            sys.exit(1)
+        
+        from roadmapper.dashboard import get_dashboard_data, get_dashboard_template
+        
+        app = Flask(__name__)
+        
+        @app.route("/")
+        def index():
+            data = get_dashboard_data()
+            template = get_dashboard_template()
+            return render_template_string(template, **data)
+        
+        url = f"http://{host}:{port}"
+        click.echo(f"🚀 Starting dashboard server...")
+        click.echo(f"📊 Dashboard available at: {url}")
+        
+        if open_browser:
+            import webbrowser
+            webbrowser.open(url)
+        
+        click.echo("\n💡 Press Ctrl+C to stop the server\n")
+        
+        # Run Flask app
+        app.run(host=host, port=port, debug=False)
+        
+    except KeyboardInterrupt:
+        click.echo("\n\n👋 Dashboard server stopped")
+    except Exception as e:
+        click.echo(f"❌ Error starting dashboard: {e}", err=True)
+        sys.exit(1)
+
+
 @main.command("search")
 @click.argument("query")
 @click.option(
