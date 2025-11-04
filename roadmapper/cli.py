@@ -8,6 +8,7 @@ from roadmapper import __version__
 from roadmapper.init import init_project
 from roadmapper.session import create_session
 from roadmapper.status import show_status
+from roadmapper.utils import ensure_utf8_console
 
 
 @click.group()
@@ -19,7 +20,8 @@ def main():
     Helps maintain context and momentum across multiple development sessions,
     especially when working with AI assistants.
     """
-    pass
+    # Ensure UTF-8 encoding for console output (especially Windows)
+    ensure_utf8_console()
 
 
 @main.command()

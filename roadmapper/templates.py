@@ -3,6 +3,8 @@
 from pathlib import Path
 from typing import Dict
 
+from roadmapper.utils import read_text_file
+
 
 # Template storage - will be populated from files or embedded
 _TEMPLATES: Dict[str, Dict[str, str]] = {}
@@ -104,7 +106,7 @@ def _get_session_template(variant: str) -> str:
     template_path = cwd / "docs" / "reference" / "SESSION_WORKING_TEMPLATE.md"
     
     if template_path.exists():
-        return template_path.read_text(encoding='utf-8')
+        return read_text_file(template_path)
     
     # Fallback to embedded template
     return """# Session YYYY-MM-DD-X: [Session Title]

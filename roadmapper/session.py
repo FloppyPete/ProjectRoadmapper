@@ -1,21 +1,11 @@
 """Session management functionality."""
 
-import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 import re
 
-
-def _ensure_utf8():
-    """Ensure UTF-8 encoding for Windows console."""
-    if sys.platform == "win32":
-        try:
-            sys.stdout.reconfigure(encoding='utf-8')
-            sys.stderr.reconfigure(encoding='utf-8')
-        except AttributeError:
-            # Python < 3.7
-            pass
+from roadmapper.utils import ensure_utf8_console, read_text_file, write_text_file
 
 
 def create_session(name: Optional[str] = None) -> Path:
@@ -28,7 +18,7 @@ def create_session(name: Optional[str] = None) -> Path:
     Returns:
         Path to the created session file
     """
-    _ensure_utf8()
+    ensure_utf8_console()
     cwd = Path.cwd()
     
     if name:
@@ -68,7 +58,7 @@ def create_session(name: Optional[str] = None) -> Path:
     # Get template
     template_path = cwd / "docs" / "reference" / "SESSION_WORKING_TEMPLATE.md"
     if template_path.exists():
-        template_content = template_path.read_text(encoding='utf-8')
+        template_content = read_text_file(template_path)
     else:
         # Fallback to basic template
         template_content = f"""# Session {datetime.now().strftime('%Y-%m-%d')}: [Session Title]
@@ -106,7 +96,7 @@ def create_session(name: Optional[str] = None) -> Path:
 """
     
     # Write session file with UTF-8 encoding
-    session_path.write_text(template_content, encoding='utf-8')
+    write_text_file(session_path, template_content)
     
     return session_path
 

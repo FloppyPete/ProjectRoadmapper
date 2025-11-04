@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Optional
 
 from roadmapper.templates import get_template
+from roadmapper.utils import write_text_file
 
 
 def init_project(template: str = "default", init_git: bool = True) -> None:
@@ -33,7 +34,7 @@ def init_project(template: str = "default", init_git: bool = True) -> None:
     roadmap_path = cwd / "PROJECT_ROADMAP.md"
     
     if not roadmap_path.exists():
-        roadmap_path.write_text(roadmap_template)
+        write_text_file(roadmap_path, roadmap_template)
     else:
         print(f"⚠️  PROJECT_ROADMAP.md already exists, skipping...")
     
@@ -42,7 +43,7 @@ def init_project(template: str = "default", init_git: bool = True) -> None:
     session_template_path = cwd / "docs" / "reference" / "SESSION_WORKING_TEMPLATE.md"
     
     if not session_template_path.exists():
-        session_template_path.write_text(session_template)
+        write_text_file(session_template_path, session_template)
     else:
         print(f"⚠️  SESSION_WORKING_TEMPLATE.md already exists, skipping...")
     

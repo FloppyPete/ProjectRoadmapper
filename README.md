@@ -196,6 +196,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Repository**: https://github.com/FloppyPete/ProjectRoadmapper
 - **Issues**: https://github.com/FloppyPete/ProjectRoadmapper/issues
 - **Roadmap**: [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md)
+- **Troubleshooting**: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 - **Origin Project**: [LocalAgent](https://github.com/FloppyPete/LocalAgent)
 
 ---

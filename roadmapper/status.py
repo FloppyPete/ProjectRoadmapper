@@ -1,24 +1,19 @@
 """Status display functionality."""
 
 import subprocess
-import sys
 from pathlib import Path
 from datetime import datetime
 import re
 
+from roadmapper.utils import ensure_utf8_console
+
 
 def show_status() -> None:
     """Show current project status."""
+    # Ensure UTF-8 encoding for console output (especially Windows)
+    ensure_utf8_console()
+    
     cwd = Path.cwd()
-    
-    # Set UTF-8 encoding for Windows console
-    if sys.platform == "win32":
-        try:
-            sys.stdout.reconfigure(encoding='utf-8')
-        except AttributeError:
-            # Python < 3.7
-            pass
-    
     print("📊 ProjectRoadmapper Status\n")
     
     # Find current session (most recent session file in root)
