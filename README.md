@@ -221,6 +221,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Repository**: https://github.com/FloppyPete/ProjectRoadmapper
 - **Issues**: https://github.com/FloppyPete/ProjectRoadmapper/issues
 - **Roadmap**: [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md)
+- **Quick Start**: [docs/QUICK_START.md](docs/QUICK_START.md) (setup guide for existing projects)
+- **Multi-Computer Setup**: [docs/MULTI_COMPUTER_SETUP.md](docs/MULTI_COMPUTER_SETUP.md) (using on multiple computers)
 - **Troubleshooting**: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
 - **Migration Guide**: [docs/MIGRATION_GUIDE.md](docs/MIGRATION_GUIDE.md) (for upgrading existing projects)
 - **What is CLI?**: [docs/WHAT_IS_CLI.md](docs/WHAT_IS_CLI.md) (simple explanation for non-programmers)
