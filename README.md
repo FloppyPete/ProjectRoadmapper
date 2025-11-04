@@ -206,6 +206,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Issues**: https://github.com/FloppyPete/ProjectRoadmapper/issues
 - **Roadmap**: [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md)
 - **Troubleshooting**: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+- **Migration Guide**: [docs/MIGRATION_GUIDE.md](docs/MIGRATION_GUIDE.md) (for upgrading existing projects)
 - **Origin Project**: [LocalAgent](https://github.com/FloppyPete/LocalAgent)
 
 ---
