@@ -27,17 +27,23 @@ ProjectRoadmapper helps you maintain context and momentum across multiple develo
 
 ## ✨ Features
 
-### Current (Phase 1 & 2)
+### Current (Phase 1, 2 & 3)
 - ✅ **ROADMAP_CREATOR.md** - Complete bootstrap guide (795 lines, battle-tested)
+- ✅ **BOOTSTRAP.md** - Single-file setup for new projects (no CLI needed)
+- ✅ **UPDATE.md** - Single-file update for existing projects
 - ✅ **CLI Tool** - `roadmapper init`, `roadmapper session`, `roadmapper status`
 - ✅ **Configuration** - Global and project-level TOML config with `roadmapper config`
 - ✅ **Session History** - Track sessions with `roadmapper history`
 - ✅ **Analytics** - View session statistics and activity trends
+- ✅ **Cross-Project Search** - `roadmapper search` across all projects
+- ✅ **Project Registry** - `roadmapper projects` to manage multiple projects
+- ✅ **Web Dashboard** - `roadmapper dashboard` for visual overview
+- ✅ **Knowledge Base** - `roadmapper knowledge` to extract and query insights
 
 ### Planned (See [Roadmap](#roadmap))
-- 🔜 **Cross-Project Intelligence** - Search across all your projects
-- 🔜 **Dashboard** - Visual overview of all projects
 - 🔜 **AI IDE Integrations** - Native Cursor/Copilot extensions
+- 🔜 **Template Marketplace** - Share and discover workflow templates
+- 🔜 **Multi-Agent Support** - Built-in coordination for Cursor 2.0+
 
 ---
 
@@ -189,11 +195,12 @@ This is the ultimate validation - dogfooding from day one.
 - `roadmapper history` command (list/stats)
 - **Status**: Complete
 
-### 🔵 Phase 3: Cross-Project Intelligence (Next)
-**Estimated: 3-4 weeks**
-- Cross-project search
-- Web-based dashboard
-- Knowledge base extraction
+### ✅ Phase 3: Cross-Project Intelligence (Complete)
+**Completed: November 4, 2025**
+- ✅ Cross-project search (`roadmapper search`)
+- ✅ Project registry system (`roadmapper projects`)
+- ✅ Web-based dashboard (`roadmapper dashboard`)
+- ✅ Knowledge base extraction (`roadmapper knowledge`)
 
 ### 🔵 Phase 4: AI IDE Integration & Ecosystem
 **Estimated: 4-6 weeks**

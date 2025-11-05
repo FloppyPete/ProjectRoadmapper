@@ -325,3 +325,5 @@ def get_related_discoveries(entry: Dict) -> List[Dict]:
     
     return related[:10]  # Limit to 10 related entries
 
+
+

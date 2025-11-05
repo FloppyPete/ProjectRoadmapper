@@ -70,6 +70,10 @@ def _get_roadmap_template(variant: str) -> str:
 
 **Session end (when user says "end session" or "archive session"):**
 - Update this roadmap briefly with session summary
+- **Quick documentation check** (2-3 min):
+  - Verify PROJECT_ROADMAP.md status is current
+  - Check README.md features list matches current state (if phase completed)
+  - Fix any obvious inconsistencies
 - **Automatically archive** SESSION file to docs/archive/sessions/
 - **Automatically create** new session file if user wants to continue
 - Ensure git clean
