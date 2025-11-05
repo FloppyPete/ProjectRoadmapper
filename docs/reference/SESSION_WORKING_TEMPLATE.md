@@ -1,3 +1,13 @@
+---
+project: "[Project Name]"
+phase: "[Current Phase Number/Name]"
+context_window: "[Estimated context size: small/medium/large]"
+session_type: "[development/review/planning/bugfix]"
+goals: ["[Goal 1]", "[Goal 2]", "[Goal 3]"]
+status: "active"
+created: "[YYYY-MM-DD]"
+---
+
 # Session YYYY-MM-DD-X: [Session Title]
 
 **Date:** [Month Day, Year]  
@@ -11,6 +21,8 @@
 > - Starting a new session for the next major feature/task
 > 
 > See `docs/reference/FILE_ORGANIZATION_GUIDE.md` for guidelines.
+> 
+> **🤖 AI Assistant Note:** The YAML frontmatter above provides machine-readable metadata. Use it to quickly understand project context, phase, and goals without reading the entire file.
 
 ---
 
