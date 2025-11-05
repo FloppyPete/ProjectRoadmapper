@@ -34,6 +34,7 @@ from roadmapper.knowledge import (
     load_knowledge,
 )
 from roadmapper.summarize import summarize_session, generate_roadmap_summary
+from roadmapper.commits import generate_commit_message
 
 
 @click.group()
@@ -814,6 +815,46 @@ def summarize(session, roadmap):
         
     except Exception as e:
         click.echo(f"❌ Error summarizing session: {e}", err=True)
+        sys.exit(1)
+
+
+@main.command("commit-msg")
+@click.option(
+    "--session",
+    type=click.Path(exists=True, path_type=Path),
+    help="Path to session file (defaults to current session)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show commit message without committing",
+)
+def commit_msg(session, dry_run):
+    """
+    Generate a commit message from session and git changes.
+    
+    Automatically generates a structured commit message based on:
+    - Session accomplishments and decisions
+    - Git diff of staged/unstaged changes
+    - File types and patterns
+    
+    Use with: git commit -m "$(roadmapper commit-msg)"
+    """
+    try:
+        project_root = get_project_root()
+        message = generate_commit_message(session, project_root)
+        
+        if dry_run:
+            click.echo("📝 Generated commit message:\n")
+            click.echo(message)
+            click.echo("\n💡 To use this message:")
+            click.echo("   git commit -m \"$(roadmapper commit-msg)\"")
+        else:
+            # Output message for git commit -F or -m
+            click.echo(message)
+        
+    except Exception as e:
+        click.echo(f"❌ Error generating commit message: {e}", err=True)
         sys.exit(1)
 
 
