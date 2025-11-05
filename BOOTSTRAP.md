@@ -25,8 +25,12 @@
    - What is the main goal?
    - What are 3-5 major phases/milestones?
 8. ✅ Fill in PROJECT_ROADMAP.md with their answers
-9. ✅ Make initial git commit
-10. ✅ **Clean up this file (BOOTSTRAP.md) after completion:**
+9. ✅ **Automatically register this project** in the ProjectRoadmapper registry:
+   - Use Python: `from roadmapper.projects import register_project; from pathlib import Path; register_project(Path.cwd())`
+   - Or use CLI: `roadmapper projects register .` (if CLI is available)
+   - This makes the project appear in the dashboard automatically
+10. ✅ Make initial git commit
+11. ✅ **Clean up this file (BOOTSTRAP.md) after completion:**
     - **Option 1 (Recommended):** Archive to `docs/archive/` or `docs/archive/workflow-setup/` if directory exists
     - **Option 2:** Delete BOOTSTRAP.md from project root (it's a one-time use file)
     - Commit the cleanup with message: "Initialize ProjectRoadmapper workflow - cleanup BOOTSTRAP.md"

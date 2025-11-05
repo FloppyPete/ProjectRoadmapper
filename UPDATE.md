@@ -25,12 +25,17 @@ Tell Cursor: `"Read UPDATE.md and update the workflow for this project"`
    - `docs/reference/` (if doesn't exist)
    - `docs/archive/sessions/` (if doesn't exist)
 
-6. ✅ **Do NOT modify:**
+6. ✅ **Automatically register/update this project** in the ProjectRoadmapper registry:
+   - Use Python: `from roadmapper.projects import register_project; from pathlib import Path; register_project(Path.cwd())`
+   - Or use CLI: `roadmapper projects register .` (if CLI is available)
+   - This ensures the project appears in the dashboard and info is up to date
+
+7. ✅ **Do NOT modify:**
    - Existing session files
    - Existing roadmap content (phases, status, etc.)
    - Existing git history
 
-7. ✅ **Clean up this file (UPDATE.md) after completion:**
+8. ✅ **Clean up this file (UPDATE.md) after completion:**
    - **Option 1 (Recommended):** Archive to `docs/archive/` or `docs/archive/workflow-updates/` if directory exists
    - **Option 2:** Delete UPDATE.md from project root (it's a one-time use file)
    - Commit the cleanup with message: "Update workflow to latest version - cleanup UPDATE.md"

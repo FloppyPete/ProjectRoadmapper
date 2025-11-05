@@ -7,6 +7,7 @@ from typing import Optional
 
 from roadmapper.templates import get_template
 from roadmapper.utils import write_text_file
+from roadmapper.projects import register_project
 
 
 def init_project(template: str = "default", init_git: bool = True) -> None:
@@ -64,4 +65,12 @@ def init_project(template: str = "default", init_git: bool = True) -> None:
             print("⚠️  Git not found, skipping git initialization")
         except subprocess.CalledProcessError:
             print("⚠️  Error checking git status, skipping git initialization")
+    
+    # Automatically register this project in the registry
+    try:
+        register_project(cwd)
+        print("✅ Project registered in dashboard")
+    except Exception as e:
+        # Don't fail initialization if registration fails
+        print(f"⚠️  Could not register project: {e}")
 
