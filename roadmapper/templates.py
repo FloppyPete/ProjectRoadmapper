@@ -43,6 +43,14 @@ def _get_roadmap_template(variant: str) -> str:
 
 **Philosophy**: *"Automate the predictable; document the decisions."*
 
+> ⚠️ **File Length Reminder:** This roadmap should stay around 400-600 lines for overview. If approaching 600+ lines, consider:
+> - Extracting detailed phase specs to action plan files (e.g., `PHASE_X_ACTION_PLAN.md`)
+> - Moving comprehensive implementation details to planning documents
+> - Keeping phase descriptions concise (50-100 lines per phase max)
+> - Linking to detailed plans rather than duplicating content
+> 
+> See `docs/reference/FILE_ORGANIZATION_GUIDE.md` for guidelines.
+
 ---
 
 ## 🤖 AI Assistant Workflow
@@ -134,6 +142,14 @@ def _get_session_template(variant: str) -> str:
 **Date:** [Month Day, Year]  
 **Phase:** [Current Phase Number/Name]  
 **Focus:** [Brief description of session goals]
+
+> ⚠️ **File Length Reminder:** This session file should stay between 150-250 lines. If approaching 250 lines, consider:
+> - Extracting detailed action plans to separate files (e.g., `PHASE_X_ACTION_PLAN.md`)
+> - Moving long implementation specs to planning documents
+> - Archiving completed work to `docs/archive/sessions/`
+> - Starting a new session for the next major feature/task
+> 
+> See `docs/reference/FILE_ORGANIZATION_GUIDE.md` for guidelines.
 
 ---
 

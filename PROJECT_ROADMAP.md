@@ -6,6 +6,14 @@
 
 **Philosophy**: *"Automate the predictable; document the decisions."*
 
+> ⚠️ **File Length Reminder:** This roadmap should stay around 400-600 lines for overview. If approaching 600+ lines, consider:
+> - Extracting detailed phase specs to action plan files (e.g., `PHASE_X_ACTION_PLAN.md`)
+> - Moving comprehensive implementation details to planning documents
+> - Keeping phase descriptions concise (50-100 lines per phase max)
+> - Linking to detailed plans rather than duplicating content
+> 
+> See `docs/reference/FILE_ORGANIZATION_GUIDE.md` for guidelines.
+
 ---
 
 ## 🤖 AI Assistant Workflow
