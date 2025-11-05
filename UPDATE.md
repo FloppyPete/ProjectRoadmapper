@@ -72,6 +72,12 @@ Replace the "🤖 AI Assistant Workflow" section in PROJECT_ROADMAP.md with this
 - Git commit after each logical unit
 - Ask before deleting/major changes
 - Update working doc with progress
+- **When user asks for LLM review:**
+  - Create `docs/guidance/[review_name]/` folder automatically
+  - Create `[review_name]_request.md` with review questions
+  - Create `[review_name]_response.md` from `docs/reference/REVIEW_RESPONSE_TEMPLATE.md`
+  - Update `docs/guidance/README.md` with new review entry
+  - User should NEVER manually create review structure - you do this automatically
 
 **Session end (when user says "end session" or "archive session"):**
 - Update this roadmap briefly with session summary
