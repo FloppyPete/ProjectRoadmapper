@@ -3,6 +3,7 @@
 Simple launcher for ProjectRoadmapper Dashboard.
 
 Double-click this file to start the dashboard server and open it in your browser.
+The console window will stay visible to show status messages.
 """
 
 import sys
@@ -44,9 +45,9 @@ def main():
     
     # Open browser after a short delay
     url = "http://127.0.0.1:5000"
-    print(f"\n📊 Dashboard will be available at: {url}")
+    print(f"\n📊 Dashboard available at: {url}")
     print("🌐 Opening browser automatically...")
-    print("\n💡 The dashboard server will keep running.")
+    print("\n💡 The dashboard server is running.")
     print("   Close this window to stop the server.\n")
     
     # Open browser after a brief delay
@@ -72,4 +73,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

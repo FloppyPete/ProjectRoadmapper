@@ -6,16 +6,29 @@
 
 ## Quick Setup (Windows)
 
-### Option 1: Desktop Shortcut (Recommended)
+### Option 1: Silent Launcher (No Terminal Window) ⭐ Recommended
 
-1. **Right-click** `launch_dashboard.bat` in the ProjectRoadmapper folder
+1. **Right-click** `launch_dashboard_silent.vbs` in the ProjectRoadmapper folder
 2. Select **"Create shortcut"**
 3. **Right-click** the shortcut and select **"Properties"**
 4. Click **"Change Icon"** and choose a nice icon (or browse for one)
 5. **Drag the shortcut** to your desktop
 6. **Rename it** to "ProjectRoadmapper Dashboard" (or whatever you like)
 
-**Done!** Now you can double-click the desktop icon to launch the dashboard.
+**Done!** Now you can double-click the desktop icon to launch the dashboard **without any terminal window popping up!**
+
+### Option 2: With Terminal Window (For Debugging)
+
+If you want to see status messages:
+
+1. **Right-click** `launch_dashboard.bat` in the ProjectRoadmapper folder
+2. Select **"Create shortcut"**
+3. **Right-click** the shortcut and select **"Properties"**
+4. Set **"Run:"** to **"Minimized"** (optional - minimizes window)
+5. Click **"Change Icon"** and choose a nice icon
+6. **Drag the shortcut** to your desktop
+
+**Done!** This version shows a terminal window with status messages.
 
 ---
 
@@ -43,9 +56,14 @@
 1. ✅ Dashboard server starts automatically
 2. ✅ Browser opens automatically to `http://127.0.0.1:5000`
 3. ✅ Dashboard shows all your projects and metrics
-4. ✅ Server keeps running until you close the window
+4. ✅ Server keeps running in the background (silent launcher) or visible window (batch file)
 
-**No typing. No commands. Just double-click and go!**
+**No typing. No commands. No terminal window (with silent launcher). Just double-click and go!**
+
+### Silent vs Visible
+
+- **`launch_dashboard_silent.vbs`** - No terminal window, completely silent
+- **`launch_dashboard.bat`** - Shows terminal window with status messages (useful for debugging)
 
 ---
 
