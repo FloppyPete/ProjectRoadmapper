@@ -26,8 +26,12 @@
    - What are 3-5 major phases/milestones?
 8. ✅ Fill in PROJECT_ROADMAP.md with their answers
 9. ✅ Make initial git commit
+10. ✅ **Clean up this file (BOOTSTRAP.md) after completion:**
+    - **Option 1 (Recommended):** Archive to `docs/archive/` or `docs/archive/workflow-setup/` if directory exists
+    - **Option 2:** Delete BOOTSTRAP.md from project root (it's a one-time use file)
+    - Commit the cleanup with message: "Initialize ProjectRoadmapper workflow - cleanup BOOTSTRAP.md"
 
-**Important:** Handle everything automatically. User should not manually copy or archive files.
+**Important:** Handle everything automatically. User should not manually copy or archive files. Then clean up this file.
 
 ---
 
@@ -226,6 +230,8 @@ Read BOOTSTRAP.md and set up the workflow for this project
 ```
 
 Cursor will do everything automatically. No CLI needed. No manual copying. Just paste and ask. ✨
+
+**Note:** BOOTSTRAP.md is a one-time use file. After setting up the workflow, it should be archived or deleted to keep the project root clean.
 
 ---
 

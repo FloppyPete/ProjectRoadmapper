@@ -30,7 +30,12 @@ Tell Cursor: `"Read UPDATE.md and update the workflow for this project"`
    - Existing roadmap content (phases, status, etc.)
    - Existing git history
 
-**Important:** Only update the workflow instructions. Preserve all existing project content.
+7. ✅ **Clean up this file (UPDATE.md) after completion:**
+   - **Option 1 (Recommended):** Archive to `docs/archive/` or `docs/archive/workflow-updates/` if directory exists
+   - **Option 2:** Delete UPDATE.md from project root (it's a one-time use file)
+   - Commit the cleanup with message: "Update workflow to latest version - cleanup UPDATE.md"
+
+**Important:** Only update the workflow instructions. Preserve all existing project content. Then clean up this file.
 
 ---
 
@@ -177,6 +182,9 @@ Cursor will:
 - ✅ Update SESSION_WORKING_TEMPLATE.md
 - ✅ Preserve all your existing project content
 - ✅ Create missing directories if needed
+- ✅ **Archive or delete UPDATE.md** (one-time use file - don't leave it in project root)
 
 **Safe for existing projects** - won't overwrite your sessions or roadmap content! ✨
+
+**Note:** UPDATE.md is a one-time use file. After updating the workflow, it should be archived or deleted to keep the project root clean.
 
