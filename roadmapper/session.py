@@ -81,25 +81,30 @@ def create_session(name: Optional[str] = None) -> Path:
     ensure_utf8_console()
     cwd = Path.cwd()
     
+    # Get current date for metadata
+    today = datetime.now()
+    date_str_short = today.strftime("%Y-%m-%d")
+    date_str_long = today.strftime("%Y_%m_%d")
+    date_display = today.strftime("%B %d, %Y")
+    
+    # Determine session filename and ID
     if name:
         # Use custom name
         session_filename = f"SESSION_{name}.md"
         session_path = cwd / session_filename
+        session_id = name
     else:
         # Use date-based naming: SESSION_YYYY_MM_DD_X.md
-        today = datetime.now()
-        date_str = today.strftime("%Y_%m_%d")
-        
         # Find existing sessions for today
         existing_sessions = sorted(
-            cwd.glob(f"SESSION_{date_str}_*.md")
+            cwd.glob(f"SESSION_{date_str_long}_*.md")
         )
         
         if existing_sessions:
             # Extract the highest letter
             letters = []
             for session_file in existing_sessions:
-                match = re.search(rf"SESSION_{date_str}_([A-Z])\.md", session_file.name)
+                match = re.search(rf"SESSION_{date_str_long}_([A-Z])\.md", session_file.name)
                 if match:
                     letters.append(match.group(1))
             
@@ -112,8 +117,9 @@ def create_session(name: Optional[str] = None) -> Path:
         else:
             next_letter = "A"
         
-        session_filename = f"SESSION_{date_str}_{next_letter}.md"
+        session_filename = f"SESSION_{date_str_long}_{next_letter}.md"
         session_path = cwd / session_filename
+        session_id = f"{date_str_short}_{next_letter}"
     
     # Get project metadata
     project_root = get_project_root()
@@ -123,11 +129,6 @@ def create_session(name: Optional[str] = None) -> Path:
         "context_window": "medium",
         "session_type": "development",
     }
-    
-    # Get current date for metadata
-    today = datetime.now()
-    date_str = today.strftime("%Y-%m-%d")
-    date_display = today.strftime("%B %d, %Y")
     
     # Get template
     template_path = cwd / "docs" / "reference" / "SESSION_WORKING_TEMPLATE.md"
@@ -139,14 +140,10 @@ def create_session(name: Optional[str] = None) -> Path:
         template_content = template_content.replace("[Current Phase Number/Name]", metadata["phase"])
         template_content = template_content.replace("[Estimated context size: small/medium/large]", metadata["context_window"])
         template_content = template_content.replace("[development/review/planning/bugfix]", metadata["session_type"])
-        template_content = template_content.replace("[YYYY-MM-DD]", date_str)
+        template_content = template_content.replace("[YYYY-MM-DD]", date_str_short)
         template_content = template_content.replace("[Month Day, Year]", date_display)
         
         # Replace YYYY-MM-DD-X in title
-        if existing_sessions:
-            session_id = f"{date_str}_{next_letter}"
-        else:
-            session_id = f"{date_str}_A"
         template_content = re.sub(r'YYYY-MM-DD-X', session_id, template_content)
     else:
         # Fallback to basic template

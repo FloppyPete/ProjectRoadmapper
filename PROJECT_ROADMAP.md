@@ -24,8 +24,10 @@
    - This keeps workflow templates synchronized across all projects
 2. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
 3. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
-4. ✅ If exists: Read it, continue that session
+4. ✅ If exists: **Read YAML frontmatter first** (project, phase, context_window, session_type, goals) for quick context
+   - Then read the full session file to continue
 5. ✅ If not: **Automatically create new session** (increment letter: A→B→C or new date)
+   - New sessions now auto-populate YAML metadata from this roadmap
 
 **Starting a new session (when user says "new session" or "start new session"):**
 - **Automatically archive** any existing `SESSION_*.md` file to `docs/archive/sessions/`
