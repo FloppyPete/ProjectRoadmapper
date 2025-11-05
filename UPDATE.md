@@ -26,9 +26,10 @@ Tell Cursor: `"Read UPDATE.md and update the workflow for this project"`
    - `docs/archive/sessions/` (if doesn't exist)
 
 6. ✅ **Automatically register/update this project** in the ProjectRoadmapper registry:
-   - Use Python: `from roadmapper.projects import register_project; from pathlib import Path; register_project(Path.cwd())`
+   - Use Python (works on Windows, Mac, Linux): `from roadmapper.projects import register_project; from pathlib import Path; register_project(Path.cwd())`
    - Or use CLI: `roadmapper projects register .` (if CLI is available)
    - This ensures the project appears in the dashboard and info is up to date
+   - **Cross-platform:** Uses `pathlib.Path` which handles paths correctly on all operating systems
 
 7. ✅ **Do NOT modify:**
    - Existing session files
@@ -191,9 +192,12 @@ Cursor will:
 - ✅ Update SESSION_WORKING_TEMPLATE.md
 - ✅ Preserve all your existing project content
 - ✅ Create missing directories if needed
+- ✅ **Automatically register/update project** in dashboard (cross-platform: Windows, Mac, Linux)
 - ✅ **Archive or delete UPDATE.md** (one-time use file - don't leave it in project root)
 
 **Safe for existing projects** - won't overwrite your sessions or roadmap content! ✨
+
+**Cross-platform:** Works on Windows, Mac, and Linux (Ubuntu, etc.). The Python code uses `pathlib.Path` which handles paths correctly on all platforms.
 
 **Note:** UPDATE.md is a one-time use file. After updating the workflow, it should be archived or deleted to keep the project root clean.
 
