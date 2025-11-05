@@ -9,17 +9,21 @@
 **Your job:** Set up the ProjectRoadmapper workflow for this project automatically.
 
 **Steps:**
-1. ✅ Create directory structure: `docs/reference/` and `docs/archive/sessions/`
-2. ✅ Create `PROJECT_ROADMAP.md` from template below
-3. ✅ Create `docs/reference/SESSION_WORKING_TEMPLATE.md` from template below
-4. ✅ Create first session file: `SESSION_YYYY_MM_DD_A.md` (use today's date)
-5. ✅ Initialize git if not already initialized
-6. ✅ Ask user a few questions to customize PROJECT_ROADMAP.md:
+1. ✅ **Check for ProjectRoadmapper updates** (if this project was cloned from ProjectRoadmapper):
+   - Check if `.git` exists and has a remote pointing to ProjectRoadmapper
+   - If yes: Run `git pull` to get latest templates and updates
+   - If no: This is fine - templates are embedded below
+2. ✅ Create directory structure: `docs/reference/` and `docs/archive/sessions/`
+3. ✅ Create `PROJECT_ROADMAP.md` from template below
+4. ✅ Create `docs/reference/SESSION_WORKING_TEMPLATE.md` from template below
+5. ✅ Create first session file: `SESSION_YYYY_MM_DD_A.md` (use today's date)
+6. ✅ Initialize git if not already initialized
+7. ✅ Ask user a few questions to customize PROJECT_ROADMAP.md:
    - What is this project called?
    - What is the main goal?
    - What are 3-5 major phases/milestones?
-7. ✅ Fill in PROJECT_ROADMAP.md with their answers
-8. ✅ Make initial git commit
+8. ✅ Fill in PROJECT_ROADMAP.md with their answers
+9. ✅ Make initial git commit
 
 **Important:** Handle everything automatically. User should not manually copy or archive files.
 
@@ -43,10 +47,13 @@ Create this file in project root:
 ## 🤖 AI Assistant Workflow
 
 **Every conversation start:**
-1. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
-2. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
-3. ✅ If exists: Read it, continue that session
-4. ✅ If not: **Automatically create new session** (increment letter: A→B→C or new date)
+1. ✅ **Check for ProjectRoadmapper updates** (optional but recommended):
+   - If this project was cloned from ProjectRoadmapper repo: Run `git pull` in that repo to get latest templates
+   - If BOOTSTRAP.md exists: Check if it's outdated (can compare version or suggest re-copying)
+2. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
+3. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
+4. ✅ If exists: Read it, continue that session
+5. ✅ If not: **Automatically create new session** (increment letter: A→B→C or new date)
 
 **Starting a new session (when user says "new session" or "start new session"):**
 - **Automatically archive** any existing `SESSION_*.md` file to `docs/archive/sessions/`
@@ -217,4 +224,16 @@ Read BOOTSTRAP.md and set up the workflow for this project
 ```
 
 Cursor will do everything automatically. No CLI needed. No manual copying. Just paste and ask. ✨
+
+---
+
+## 🔄 Keeping Templates Updated
+
+**If you cloned ProjectRoadmapper:** Cursor will automatically check for updates when starting sessions.
+
+**If you just copied BOOTSTRAP.md:** To get latest templates, either:
+- Re-copy BOOTSTRAP.md from the latest ProjectRoadmapper repo
+- Or tell Cursor: "Check if BOOTSTRAP.md is up to date with ProjectRoadmapper"
+
+This keeps all your projects using the latest workflow improvements!
 
