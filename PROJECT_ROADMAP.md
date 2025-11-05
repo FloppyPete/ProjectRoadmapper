@@ -40,6 +40,9 @@
 - Git commit after each logical unit
 - Ask before deleting/major changes
 - Update working doc with progress
+- **Use reasoning markers** (🧭 DECISION:, 🤔 HYPOTHESIS:, ✅ VERIFIED:, etc.) to help LLMs understand your thought process
+  - Markers enable better reasoning extraction and review automation
+  - See session template for full list of available markers
 
 **Session end (when user says "end session" or "archive session"):**
 - Update this roadmap briefly with session summary

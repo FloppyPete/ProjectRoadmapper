@@ -67,6 +67,24 @@ Use this space as scratchpad:
 - Questions and answers
 - Progress tracking
 
+**🤖 Reasoning Markers** (Optional but recommended for better LLM parsing):
+Use these markers to help AI assistants understand your reasoning process:
+
+- `🧭 DECISION:` - When making a design or implementation decision
+  - Example: `🧭 DECISION: Using YAML frontmatter instead of JSON for better readability`
+  
+- `🤔 HYPOTHESIS:` - When proposing a theory or assumption
+  - Example: `🤔 HYPOTHESIS: Metadata extraction will reduce context parsing time by 40%`
+  
+- `✅ VERIFIED:` - When confirming something works or is correct
+  - Example: `✅ VERIFIED: Session creation correctly extracts project name from roadmap`
+  
+- `⚠️ WARNING:` - When noting a potential issue or concern
+  - Example: `⚠️ WARNING: This approach may break with custom roadmap formats`
+  
+- `💡 INSIGHT:` - When discovering something important
+  - Example: `💡 INSIGHT: Regex patterns work well for phase extraction`
+
 **Git commits:**
 - `<hash>` - [Brief description]
 
