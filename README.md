@@ -43,7 +43,26 @@ ProjectRoadmapper helps you maintain context and momentum across multiple develo
 
 ## 🚀 Quick Start
 
-### For Existing Projects (Recommended)
+### ⭐ Easiest Method: Bootstrap File (No CLI Required!)
+
+**Perfect for non-programmers or anyone who wants zero setup:**
+
+1. Copy `BOOTSTRAP.md` from this repo to your project root
+2. Tell Cursor: `"Read BOOTSTRAP.md and set up the workflow for this project"`
+3. Done! ✨
+
+Cursor will automatically:
+- Create all directories
+- Generate PROJECT_ROADMAP.md
+- Create session templates
+- Set up your first session
+- Initialize git if needed
+
+**No CLI. No installation. No manual copying. Just paste and ask.**
+
+---
+
+### For Existing Projects (CLI Method)
 
 **Step-by-step guide:** See [docs/QUICK_START.md](docs/QUICK_START.md) for detailed instructions.
 
