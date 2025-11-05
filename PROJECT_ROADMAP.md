@@ -43,6 +43,10 @@
 - **Use reasoning markers** (🧭 DECISION:, 🤔 HYPOTHESIS:, ✅ VERIFIED:, etc.) to help LLMs understand your thought process
   - Markers enable better reasoning extraction and review automation
   - See session template for full list of available markers
+- **Use structured task blocks** (`[TASK]`, `[STATUS]`, `[NOTES]`) for tracking specific tasks
+  - Enables auto-generation of task lists and session summaries
+  - Better LLM parsing for progress tracking
+  - See session template for format examples
 
 **Session end (when user says "end session" or "archive session"):**
 - Update this roadmap briefly with session summary

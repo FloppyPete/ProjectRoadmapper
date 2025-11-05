@@ -86,6 +86,27 @@ Quick reference:
 💡 INSIGHT: Regex patterns work well for phase extraction
 ```
 
+**📋 Structured Task Blocks** (Optional format for better LLM parsing):
+Use this format for tracking specific tasks. See `docs/reference/STRUCTURED_TASKS.md` for full guide.
+
+**Quick format:**
+```
+[TASK] Task description
+[STATUS] in_progress | completed | blocked | deferred
+[NOTES] Additional context or details
+```
+
+**Example:**
+```
+[TASK] Add YAML frontmatter to session template
+[STATUS] completed
+[NOTES] Includes all required metadata fields
+
+[TASK] Test metadata extraction
+[STATUS] in_progress
+[NOTES] Verifying it works with custom roadmap formats
+```
+
 **Git commits:**
 - `<hash>` - [Brief description]
 
