@@ -38,6 +38,7 @@ ProjectRoadmapper helps you maintain context and momentum across multiple develo
 - ✅ **Cross-Project Search** - `roadmapper search` across all projects
 - ✅ **Project Registry** - `roadmapper projects` to manage multiple projects
 - ✅ **Web Dashboard** - `roadmapper dashboard` for visual overview
+- ✅ **Dashboard Launcher** - One-click desktop shortcut (no typing required!)
 - ✅ **Knowledge Base** - `roadmapper knowledge` to extract and query insights
 
 ### Planned (See [Roadmap](#roadmap))
