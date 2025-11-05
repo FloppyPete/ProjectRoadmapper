@@ -33,6 +33,7 @@ from roadmapper.knowledge import (
     get_related_discoveries,
     load_knowledge,
 )
+from roadmapper.summarize import summarize_session, generate_roadmap_summary
 
 
 @click.group()
@@ -722,6 +723,97 @@ def search(query, file_types, case_sensitive, max_results, project_paths):
         
     except Exception as e:
         click.echo(f"❌ Error searching: {e}", err=True)
+        sys.exit(1)
+
+
+@main.command()
+@click.option(
+    "--session",
+    type=click.Path(exists=True, path_type=Path),
+    help="Path to session file (defaults to current session)",
+)
+@click.option(
+    "--roadmap",
+    is_flag=True,
+    help="Generate summary formatted for PROJECT_ROADMAP.md",
+)
+def summarize(session, roadmap):
+    """
+    Generate a summary of a session.
+    
+    Extracts accomplishments, decisions, discoveries, and tasks from session file.
+    Can generate summary formatted for adding to PROJECT_ROADMAP.md.
+    """
+    try:
+        project_root = get_project_root()
+        
+        if session:
+            session_file = Path(session)
+        else:
+            # Find current session
+            if project_root:
+                session_files = sorted((project_root).glob("SESSION_*.md"))
+            else:
+                session_files = sorted(Path.cwd().glob("SESSION_*.md"))
+            
+            if not session_files:
+                click.echo("❌ No session file found", err=True)
+                click.echo("   Create a session with: roadmapper session")
+                sys.exit(1)
+            
+            session_file = session_files[-1]
+        
+        if roadmap:
+            # Generate roadmap-formatted summary
+            summary = generate_roadmap_summary(session_file)
+            click.echo(summary)
+        else:
+            # Generate detailed summary
+            data = summarize_session(session_file, project_root)
+            
+            click.echo(f"📝 Session Summary: {session_file.name}\n")
+            
+            if data["summary"]:
+                click.echo(f"Summary: {data['summary']}\n")
+            
+            if data["accomplishments"]:
+                click.echo("✅ Accomplishments:")
+                for acc in data["accomplishments"]:
+                    click.echo(f"   - {acc}")
+                click.echo()
+            
+            if data["decisions"]:
+                click.echo("🧭 Decisions:")
+                for decision in data["decisions"]:
+                    click.echo(f"   - {decision}")
+                click.echo()
+            
+            if data["discoveries"]:
+                click.echo("💡 Discoveries:")
+                for discovery in data["discoveries"]:
+                    click.echo(f"   - {discovery}")
+                click.echo()
+            
+            if data["tasks"]:
+                click.echo("📋 Tasks:")
+                for task in data["tasks"]:
+                    status_icon = {
+                        "completed": "✅",
+                        "in_progress": "🔄",
+                        "blocked": "⚠️",
+                        "deferred": "⏸️",
+                    }.get(task["status"].lower(), "📝")
+                    click.echo(f"   {status_icon} {task['task']} [{task['status']}]")
+                    if task["notes"]:
+                        click.echo(f"      Notes: {task['notes']}")
+                click.echo()
+            
+            if not any([data["accomplishments"], data["decisions"], data["discoveries"], data["tasks"]]):
+                click.echo("⚠️  No summary data found in session file")
+                click.echo("   Make sure session has 'Session Accomplishments' section")
+        
+    except Exception as e:
+        click.echo(f"❌ Error summarizing session: {e}", err=True)
         sys.exit(1)
 
 
