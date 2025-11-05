@@ -280,12 +280,39 @@ And it automatically creates `SESSION_2025_11_04_E.md` for you.
 **Estimated:** 2-3 weeks
 **Dependencies:** Phase 4 (AI IDE Integration)
 
+### Bootstrap Files & Simplified Setup (Latest Work)
+
+**Created BOOTSTRAP.md:**
+- Single-file setup for NEW projects - no CLI needed
+- Contains all templates embedded (no git pull required)
+- Perfect for non-programmers - just paste and tell Cursor to read it
+- Automatically sets up entire workflow structure
+- Includes cleanup instructions (archives/deletes itself after use)
+
+**Created UPDATE.md:**
+- Single-file update for EXISTING projects
+- Safely updates workflow section without overwriting content
+- Preserves all existing sessions and roadmap content
+- Includes cleanup instructions (archives/deletes itself after use)
+
+**Enhanced Workflow:**
+- Added automatic git update checks to workflow templates
+- Keeps all projects synchronized with latest improvements
+- Updated templates in `roadmapper/templates.py` and `ROADMAP_CREATOR.md`
+- Both BOOTSTRAP.md and UPDATE.md handle cleanup automatically
+
+**Key Achievement:** Eliminated CLI requirement for basic setup - markdown-only workflow now possible!
+
 **Git commits:**
 - `6d83c47` - Start new session: Getting the Developer Up to Speed
 - `f46e061` - Add multi-agent workflow analysis for Cursor 2.0
 - `f17bac6` - Quick fixes: Document multi-agent compatibility
 - `1b1ca6b` - Add migration guide for upgrading existing projects
 - `a70a047` - Add migration guide link to README, update session
+- `3698f74` - Add BOOTSTRAP.md: Single-file setup (no CLI needed)
+- `26aefe0` - Add automatic git update checks to workflow
+- `eec9d29` - Add UPDATE.md for existing projects
+- `65946bb` - Add cleanup instructions: UPDATE.md and BOOTSTRAP.md archive/delete themselves after use
 
 ---
 
@@ -301,6 +328,11 @@ And it automatically creates `SESSION_2025_11_04_E.md` for you.
 - ✅ Updated PROJECT_ROADMAP.md, README.md, and session.py with multi-agent notes
 - ✅ Created migration guide for upgrading existing projects (docs/MIGRATION_GUIDE.md)
 - ✅ Answered LocalAgent upgrade question with clear options
+- ✅ Created BOOTSTRAP.md - single-file setup for new projects (no CLI needed)
+- ✅ Created UPDATE.md - single-file update for existing projects (safe, preserves content)
+- ✅ Added automatic git update checks to workflow templates
+- ✅ Added cleanup instructions - bootstrap files archive/delete themselves after use
+- ✅ Updated README.md to highlight markdown-only workflow as easiest method
 
 **In Progress:**
 - Developer onboarding documentation

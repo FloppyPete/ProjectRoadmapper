@@ -11,12 +11,19 @@
 ## 🤖 AI Assistant Workflow
 
 **Every conversation start:**
-1. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
-2. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
-3. ✅ If exists: Read it, continue that session
-4. ✅ If not: Create new session (increment letter: A→B→C or new date)
+1. ✅ **Check for ProjectRoadmapper updates** (optional but recommended):
+   - If ProjectRoadmapper repo exists (e.g., `../ProjectRoadmapper` or configured path): Run `git pull` to get latest templates
+   - This keeps workflow templates synchronized across all projects
+2. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
+3. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
+4. ✅ If exists: Read it, continue that session
+5. ✅ If not: **Automatically create new session** (increment letter: A→B→C or new date)
 
-**Note:** Current workflow assumes single-agent mode. For multi-agent scenarios (e.g., Cursor 2.0), see analysis in Session "Getting the Developer Up to Speed" or use agent-specific session files (`SESSION_YYYY_MM_DD_X_AGENT_NAME.md`).
+**Starting a new session (when user says "new session" or "start new session"):**
+- **Automatically archive** any existing `SESSION_*.md` file to `docs/archive/sessions/`
+- **Automatically create** new `SESSION_YYYY_MM_DD_X.md` file from template
+- **Automatically update** PROJECT_ROADMAP.md with brief summary of archived session
+- User should NEVER manually archive or copy templates - you do this automatically
 
 **During session:**
 - Use SESSION file as scratchpad freely
@@ -24,12 +31,15 @@
 - Ask before deleting/major changes
 - Update working doc with progress
 
-**Session end:**
-- Update this roadmap briefly
-- Archive SESSION file to docs/archive/sessions/
+**Session end (when user says "end session" or "archive session"):**
+- Update this roadmap briefly with session summary
+- **Automatically archive** SESSION file to docs/archive/sessions/
+- **Automatically create** new session file if user wants to continue
 - Ensure git clean
 
-**Key principle:** Always in a session. Always grounded in roadmap. Commit frequently.
+**Key principle:** Always in a session. Always grounded in roadmap. Commit frequently. **YOU handle archiving and session creation automatically - never ask the user to do manual file operations.**
+
+**Note:** Current workflow assumes single-agent mode. For multi-agent scenarios (e.g., Cursor 2.0), see analysis in Session "Getting the Developer Up to Speed" or use agent-specific session files (`SESSION_YYYY_MM_DD_X_AGENT_NAME.md`).
 
 **Template:** `docs/reference/SESSION_WORKING_TEMPLATE.md`
 
