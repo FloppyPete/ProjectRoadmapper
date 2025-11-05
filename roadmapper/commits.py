@@ -184,21 +184,23 @@ def _determine_commit_type(
     accomplishments_text = " ".join(accomplishments).lower()
     
     # Check file types
-    modified_files = git_status.get("modified", [])
-    added_files = git_status.get("added", [])
+    modified_files = git_status.get("modified", []) or []
+    added_files = git_status.get("added", []) or []
+    
+    all_files = modified_files + added_files
     
     # Determine type
-    if any("doc" in f.lower() or "readme" in f.lower() or "guide" in f.lower() for f in modified_files + added_files):
+    if all_files and any("doc" in f.lower() or "readme" in f.lower() or "guide" in f.lower() for f in all_files):
         return "docs"
-    elif any("test" in f.lower() for f in modified_files + added_files):
+    elif all_files and any("test" in f.lower() for f in all_files):
         return "test"
     elif "fix" in accomplishments_text or "bug" in accomplishments_text or "error" in accomplishments_text:
         return "fix"
     elif "refactor" in accomplishments_text:
         return "refactor"
-    elif any(f.endswith(".md") for f in added_files + modified_files) and "template" in accomplishments_text:
+    elif all_files and any(f.endswith(".md") for f in all_files) and "template" in accomplishments_text:
         return "docs"
-    elif any("feature" in accomplishments_text or "add" in accomplishments_text or "implement" in accomplishments_text):
+    elif "feature" in accomplishments_text or "add" in accomplishments_text or "implement" in accomplishments_text:
         return "feat"
     else:
         return "feat"  # Default
