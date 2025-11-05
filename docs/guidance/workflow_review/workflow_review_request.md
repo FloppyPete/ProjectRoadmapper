@@ -149,6 +149,10 @@ When user says "end session" or "archive session":
 - Automatic project registration
 - Documentation cleanup integrated into workflow
 - Cross-platform support verified
+- **Automated LLM review structure** (`docs/guidance/`)
+  - Structured review requests and responses
+  - Automatic folder and file creation
+  - Template-based response format
 
 ---
 
@@ -310,6 +314,13 @@ When user says "end session" or "archive session":
 - Pattern detection is basic
 - Knowledge extraction could be smarter
 - No semantic search (only text search)
+
+### Recently Implemented (November 4, 2025):
+- ✅ Automated LLM review structure (`docs/guidance/` folder)
+- ✅ Automatic review folder and file creation
+- ✅ Review response templates
+- ✅ Dashboard launcher (silent, one-click)
+- ✅ Automatic project registration on init/update
 
 ### Technical Constraints:
 - Python-based CLI (requires installation)
