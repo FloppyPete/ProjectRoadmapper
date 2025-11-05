@@ -51,6 +51,10 @@
 **Session end (when user says "end session" or "archive session"):**
 - Update this roadmap briefly with session summary
 - **Automatically archive** SESSION file to docs/archive/sessions/
+- **Update context compression** (`.roadmapper/context.json`):
+  - Extract session summary from accomplishments
+  - Extract key decisions (using 🧭 DECISION: markers)
+  - Add to context compression storage for efficient retrieval
 - **Automatically create** new session file if user wants to continue
 - Ensure git clean
 
