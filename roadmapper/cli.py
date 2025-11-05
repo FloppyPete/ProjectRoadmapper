@@ -68,7 +68,9 @@ def init(template, no_git):
     """
     try:
         init_project(template=template, init_git=not no_git)
+        # Project is automatically registered by init_project()
         click.echo("✅ Project initialized successfully!")
+        click.echo("✅ Project registered in dashboard")
     except Exception as e:
         click.echo(f"❌ Error initializing project: {e}", err=True)
         sys.exit(1)
