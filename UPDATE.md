@@ -1,57 +1,50 @@
-# 🚀 ProjectRoadmapper Bootstrap
+# 🔄 Update Existing Project Workflow
 
-**One file. Paste this into your project. Tell Cursor: "Read BOOTSTRAP.md and set up the workflow."**
+**For projects that already have ProjectRoadmapper workflow set up.**
 
-**Note:** This is for **NEW projects**. If you already have ProjectRoadmapper set up, use `UPDATE.md` instead.
+Tell Cursor: `"Read UPDATE.md and update the workflow for this project"`
 
 ---
 
 ## 🤖 Instructions for AI Assistant (Cursor)
 
-**Your job:** Set up the ProjectRoadmapper workflow for this project automatically.
+**Your job:** Update an existing ProjectRoadmapper workflow to the latest version.
 
 **Steps:**
-1. ✅ **Check for ProjectRoadmapper updates** (if this project was cloned from ProjectRoadmapper):
-   - Check if `.git` exists and has a remote pointing to ProjectRoadmapper
-   - If yes: Run `git pull` to get latest templates and updates
-   - If no: This is fine - templates are embedded below
-2. ✅ Create directory structure: `docs/reference/` and `docs/archive/sessions/`
-3. ✅ Create `PROJECT_ROADMAP.md` from template below
-4. ✅ Create `docs/reference/SESSION_WORKING_TEMPLATE.md` from template below
-5. ✅ Create first session file: `SESSION_YYYY_MM_DD_A.md` (use today's date)
-6. ✅ Initialize git if not already initialized
-7. ✅ Ask user a few questions to customize PROJECT_ROADMAP.md:
-   - What is this project called?
-   - What is the main goal?
-   - What are 3-5 major phases/milestones?
-8. ✅ Fill in PROJECT_ROADMAP.md with their answers
-9. ✅ Make initial git commit
+1. ✅ **Check for ProjectRoadmapper updates:**
+   - If ProjectRoadmapper repo exists (e.g., `../ProjectRoadmapper` or `~/ProjectRoadmapper`): Run `git pull` to get latest templates
+   - This ensures you have the latest workflow improvements
 
-**Important:** Handle everything automatically. User should not manually copy or archive files.
+2. ✅ **Read existing PROJECT_ROADMAP.md** - Check current "AI Assistant Workflow" section
+
+3. ✅ **Update the "AI Assistant Workflow" section** in PROJECT_ROADMAP.md with the latest version below
+
+4. ✅ **Update SESSION_WORKING_TEMPLATE.md** (if it exists at `docs/reference/SESSION_WORKING_TEMPLATE.md`) with the latest version below
+
+5. ✅ **Create missing directories** if needed:
+   - `docs/reference/` (if doesn't exist)
+   - `docs/archive/sessions/` (if doesn't exist)
+
+6. ✅ **Do NOT modify:**
+   - Existing session files
+   - Existing roadmap content (phases, status, etc.)
+   - Existing git history
+
+**Important:** Only update the workflow instructions. Preserve all existing project content.
 
 ---
 
-## 📝 Template: PROJECT_ROADMAP.md
+## 📝 Latest AI Assistant Workflow Section
 
-Create this file in project root:
+Replace the "🤖 AI Assistant Workflow" section in PROJECT_ROADMAP.md with this:
 
 ```markdown
-# 📖 Quick Start
-
-**Living Roadmap** for [PROJECT_NAME]
-
-**6-Step Workflow**: Plan → Consult (optional) → Implement → Document → Sanity Check → Repeat
-
-**Philosophy**: *"Automate the predictable; document the decisions."*
-
----
-
 ## 🤖 AI Assistant Workflow
 
 **Every conversation start:**
 1. ✅ **Check for ProjectRoadmapper updates** (optional but recommended):
-   - If this project was cloned from ProjectRoadmapper repo: Run `git pull` in that repo to get latest templates
-   - If BOOTSTRAP.md exists: Check if it's outdated (can compare version or suggest re-copying)
+   - If ProjectRoadmapper repo exists (e.g., `../ProjectRoadmapper` or configured path): Run `git pull` to get latest templates
+   - This keeps workflow templates synchronized across all projects
 2. ✅ Read this file (PROJECT_ROADMAP.md) - Current Status section
 3. ✅ Check for `SESSION_YYYY_MM_DD_X.md` in root
 4. ✅ If exists: Read it, continue that session
@@ -78,60 +71,13 @@ Create this file in project root:
 **Key principle:** Always in a session. Always grounded in roadmap. Commit frequently. **YOU handle archiving and session creation automatically - never ask the user to do manual file operations.**
 
 **Template:** `docs/reference/SESSION_WORKING_TEMPLATE.md`
-
----
-
-# [PROJECT_NAME]
-
-**Goal**: [PROJECT_GOAL]
-
-**Last Updated**: [TODAY'S_DATE] (Status: 🆕 New Project)
-
----
-
-## 📊 Current Status
-
-**Project Health:** 🆕 New Project
-
-**Phase Progress:**
-- 🟢 Phase 0: Project Foundation (In Progress)
-
-**Recent Work:** Project workflow initialized
-
----
-
-## 📋 Phases
-
-[PHASES_LIST]
-
----
-
-## 🎯 Quick Reference
-
-### Key Files
-- [List important files as project develops]
-
-### Running the Project
-\`\`\`bash
-# [Add commands as needed]
-\`\`\`
-
----
-
-## 💡 Recent Sessions
-
-**Session 0: Project Foundation**
-- Workflow structure created
-- Roadmap initialized
-
-**Archives:** [docs/archive/sessions/](docs/archive/sessions/)
 ```
 
 ---
 
-## 📝 Template: SESSION_WORKING_TEMPLATE.md
+## 📝 Latest SESSION_WORKING_TEMPLATE.md
 
-Create this file at `docs/reference/SESSION_WORKING_TEMPLATE.md`:
+Update or create `docs/reference/SESSION_WORKING_TEMPLATE.md` with this:
 
 ```markdown
 # Session YYYY-MM-DD-X: [Session Title]
@@ -220,22 +166,17 @@ Use this space as scratchpad:
 
 ## ✅ That's It!
 
-**For the user:** Paste this file into your project root, then tell Cursor:
+**For existing projects:** Tell Cursor:
 ```
-Read BOOTSTRAP.md and set up the workflow for this project
+Read UPDATE.md and update the workflow for this project
 ```
 
-Cursor will do everything automatically. No CLI needed. No manual copying. Just paste and ask. ✨
+Cursor will:
+- ✅ Pull latest updates from ProjectRoadmapper repo (if it exists)
+- ✅ Update only the workflow section in PROJECT_ROADMAP.md
+- ✅ Update SESSION_WORKING_TEMPLATE.md
+- ✅ Preserve all your existing project content
+- ✅ Create missing directories if needed
 
----
-
-## 🔄 Keeping Templates Updated
-
-**If you cloned ProjectRoadmapper:** Cursor will automatically check for updates when starting sessions.
-
-**If you just copied BOOTSTRAP.md:** To get latest templates, either:
-- Re-copy BOOTSTRAP.md from the latest ProjectRoadmapper repo
-- Or tell Cursor: "Check if BOOTSTRAP.md is up to date with ProjectRoadmapper"
-
-This keeps all your projects using the latest workflow improvements!
+**Safe for existing projects** - won't overwrite your sessions or roadmap content! ✨
 
