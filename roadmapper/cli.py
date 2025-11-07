@@ -35,6 +35,7 @@ from roadmapper.knowledge import (
 )
 from roadmapper.summarize import summarize_session, generate_roadmap_summary
 from roadmapper.commits import generate_commit_message
+from roadmapper.session_close import close_session
 
 
 @click.group()
@@ -855,6 +856,89 @@ def commit_msg(session, dry_run):
         
     except Exception as e:
         click.echo(f"❌ Error generating commit message: {e}", err=True)
+        sys.exit(1)
+
+
+@main.command("close")
+@click.option(
+    "--session",
+    type=click.Path(exists=True, path_type=Path),
+    help="Path to session file (defaults to current session)",
+)
+@click.option(
+    "--no-archive",
+    is_flag=True,
+    help="Don't archive the session file",
+)
+@click.option(
+    "--no-roadmap",
+    is_flag=True,
+    help="Don't update PROJECT_ROADMAP.md",
+)
+@click.option(
+    "--no-context",
+    is_flag=True,
+    help="Don't update context compression",
+)
+def close(session, no_archive, no_roadmap, no_context):
+    """
+    Smart session closing: summarize, suggest next steps, generate handoff.
+    
+    Automatically:
+    - Summarizes session accomplishments
+    - Updates PROJECT_ROADMAP.md with session summary
+    - Updates context compression (.roadmapper/context.json)
+    - Archives session file to docs/archive/sessions/
+    - Generates handoff prompt for next session
+    
+    Use when ending a session to prepare for the next one.
+    """
+    try:
+        project_root = get_project_root()
+        
+        result = close_session(
+            session_file=session,
+            project_root=project_root,
+            archive=not no_archive,
+            update_roadmap=not no_roadmap,
+            update_context=not no_context,
+        )
+        
+        click.echo(f"✅ Session {result['session_id']} closed successfully\n")
+        
+        # Show summary
+        accomplishments = result["summary"].get("accomplishments", [])
+        if accomplishments:
+            click.echo("📝 Accomplishments:")
+            for acc in accomplishments[:5]:
+                click.echo(f"   - {acc}")
+            click.echo()
+        
+        # Show next goals
+        if result["next_goals"]:
+            click.echo("🎯 Suggested Next Goals:")
+            for goal in result["next_goals"]:
+                click.echo(f"   - {goal}")
+            click.echo()
+        
+        # Show actions taken
+        actions = result["actions"]
+        click.echo("✅ Actions taken:")
+        if actions.get("archived"):
+            click.echo(f"   - Archived to: {actions.get('archive_path', 'docs/archive/sessions/')}")
+        if actions.get("roadmap_updated"):
+            click.echo("   - Updated PROJECT_ROADMAP.md")
+        if actions.get("context_updated"):
+            click.echo("   - Updated context compression")
+        click.echo()
+        
+        # Show handoff prompt
+        click.echo("📋 Handoff Prompt (for next session):")
+        click.echo()
+        click.echo(result["handoff_prompt"])
+        
+    except Exception as e:
+        click.echo(f"❌ Error closing session: {e}", err=True)
         sys.exit(1)
 
 
