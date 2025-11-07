@@ -36,7 +36,7 @@ from roadmapper.knowledge import (
 from roadmapper.summarize import summarize_session, generate_roadmap_summary
 from roadmapper.commits import generate_commit_message
 from roadmapper.session_close import close_session
-from roadmapper.docs import suggest_doc_updates, check_doc_consistency, fix_doc_consistency
+from roadmapper.docs import suggest_doc_updates, check_doc_consistency, fix_doc_consistency, suggest_next_steps
 
 
 @click.group()
@@ -1086,6 +1086,60 @@ def docs_check(fix, dry_run):
         
     except Exception as e:
         click.echo(f"❌ Error checking documentation: {e}", err=True)
+        sys.exit(1)
+
+
+@docs.command("suggest-next")
+def docs_suggest_next():
+    """
+    Proactively suggest next steps based on roadmap progress.
+    
+    Analyzes current phase, recent accomplishments, and roadmap status
+    to suggest what to work on next.
+    """
+    try:
+        project_root = get_project_root()
+        
+        suggestions = suggest_next_steps(project_root)
+        
+        if not suggestions:
+            click.echo("✅ No specific suggestions at this time")
+            click.echo("   Continue with current phase goals")
+            return
+        
+        click.echo(f"💡 Found {len(suggestions)} suggestion(s) for next steps:\n")
+        
+        # Group by priority
+        high_priority = [s for s in suggestions if s["priority"] == "high"]
+        medium_priority = [s for s in suggestions if s["priority"] == "medium"]
+        low_priority = [s for s in suggestions if s["priority"] == "low"]
+        
+        if high_priority:
+            click.echo("🔴 High Priority:")
+            for suggestion in high_priority:
+                click.echo(f"   - {suggestion['message']}")
+                if "action" in suggestion:
+                    click.echo(f"     → {suggestion['action']}")
+            click.echo()
+        
+        if medium_priority:
+            click.echo("🟡 Medium Priority:")
+            for suggestion in medium_priority:
+                click.echo(f"   - {suggestion['message']}")
+                if "action" in suggestion:
+                    click.echo(f"     → {suggestion['action']}")
+            click.echo()
+        
+        if low_priority:
+            click.echo("🟢 Low Priority:")
+            for suggestion in low_priority:
+                click.echo(f"   - {suggestion['message']}")
+                if "action" in suggestion:
+                    click.echo(f"     → {suggestion['action']}")
+            click.echo()
+        
+    except Exception as e:
+        click.echo(f"❌ Error suggesting next steps: {e}", err=True)
         sys.exit(1)
 
 

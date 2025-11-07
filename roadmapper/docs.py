@@ -364,7 +364,7 @@ def _extract_phase_status(content: str, phase_name: str) -> Optional[str]:
     ]
     
     for pattern in patterns:
-        match = __import__('re').search(pattern, content, re.IGNORECASE | re.DOTALL)
+        match = re.search(pattern, content, re.IGNORECASE | re.DOTALL)
         if match:
             if "Complete" in match.group(0):
                 return "Complete"
@@ -372,6 +372,131 @@ def _extract_phase_status(content: str, phase_name: str) -> Optional[str]:
                 return "In Progress"
             elif "Planning" in match.group(0):
                 return "Planning"
+    
+    return None
+
+
+def suggest_next_steps(
+    project_root: Optional[Path] = None,
+) -> List[Dict[str, str]]:
+    """
+    Proactively suggest next steps based on roadmap progress.
+    
+    Args:
+        project_root: Project root directory
+    
+    Returns:
+        List of suggestions with type, priority, and message
+    """
+    suggestions = []
+    
+    if project_root is None:
+        project_root = get_project_root()
+    
+    if project_root is None:
+        project_root = Path.cwd()
+    
+    roadmap_path = project_root / "PROJECT_ROADMAP.md"
+    if not roadmap_path.exists():
+        return suggestions
+    
+    roadmap_content = read_text_file(roadmap_path)
+    
+    # Find current phase
+    current_phase = _find_current_phase(roadmap_content)
+    if not current_phase:
+        return suggestions
+    
+    # Check phase progress
+    phase_status = _extract_phase_status(roadmap_content, current_phase)
+    
+    # Get recent session accomplishments
+    session_files = sorted(project_root.glob("SESSION_*.md"))
+    recent_accomplishments = []
+    if session_files:
+        latest_session = session_files[-1]
+        session_content = read_text_file(latest_session)
+        
+        # Extract accomplishments
+        if "## ✅ Session Accomplishments" in session_content:
+            acc_section = session_content.split("## ✅ Session Accomplishments")[1].split("##")[0]
+            accomplishments = re.findall(r'[-*]\s*✅\s*(.+?)(?=\n[-*]|\n##|\Z)', acc_section, re.MULTILINE)
+            recent_accomplishments = [acc.strip() for acc in accomplishments[:5]]
+    
+    # Suggest based on phase
+    if "Phase 4.2" in current_phase:
+        # Check which 4.2 features are complete
+        completed_features = []
+        for feature_num in ["4.2.1", "4.2.2", "4.2.3", "4.2.4", "4.2.5", "4.2.6"]:
+            if f"Phase {feature_num}" in roadmap_content or f"4.2.{feature_num[-1]}" in roadmap_content:
+                # Check if marked complete
+                feature_section = re.search(rf"Phase {feature_num}.*?(?=Phase |\Z)", roadmap_content, re.DOTALL | re.IGNORECASE)
+                if feature_section and "✅" in feature_section.group(0):
+                    completed_features.append(feature_num)
+        
+        # Suggest next incomplete feature
+        all_features = ["4.2.1", "4.2.2", "4.2.3", "4.2.4", "4.2.5", "4.2.6"]
+        for feature in all_features:
+            if feature not in completed_features:
+                feature_names = {
+                    "4.2.1": "Auto-Generate Session Summaries",
+                    "4.2.2": "Auto-Generate Commit Messages",
+                    "4.2.3": "Smart Session Closing",
+                    "4.2.4": "Incremental Documentation",
+                    "4.2.5": "Documentation Consistency Checks",
+                    "4.2.6": "Proactive Suggestions",
+                }
+                suggestions.append({
+                    "type": "next_feature",
+                    "priority": "high",
+                    "message": f"Continue with Phase {feature}: {feature_names.get(feature, feature)}",
+                    "action": f"Implement Phase {feature}",
+                })
+                break
+    
+    # Check if session needs closing
+    if session_files:
+        latest_session = session_files[-1]
+        session_content = read_text_file(latest_session)
+        
+        # Check if session has accomplishments but not closed
+        if "## ✅ Session Accomplishments" in session_content:
+            if "roadmap" not in session_content.lower() or "archive" not in session_content.lower():
+                suggestions.append({
+                    "type": "session_close",
+                    "priority": "medium",
+                    "message": "Current session has accomplishments. Consider closing with 'roadmapper close'",
+                    "action": "roadmapper close",
+                })
+    
+    # Check if roadmap needs updating
+    if recent_accomplishments:
+        roadmap_content_lower = roadmap_content.lower()
+        latest_session_id = session_files[-1].stem if session_files else None
+        if latest_session_id and latest_session_id not in roadmap_content_lower:
+            suggestions.append({
+                "type": "roadmap_update",
+                "priority": "high",
+                "message": f"Session {latest_session_id} accomplishments not in roadmap. Update with 'roadmapper summarize --roadmap'",
+                "action": "roadmapper summarize --roadmap",
+            })
+    
+    return suggestions
+
+
+def _find_current_phase(content: str) -> Optional[str]:
+    """Find the current active phase from roadmap."""
+    # Look for phase progress section
+    phase_pattern = r'Phase Progress:.*?🔵 Phase (\d+[\.\d]*):\s*([^\n]+)'
+    match = re.search(phase_pattern, content, re.DOTALL)
+    if match:
+        return f"Phase {match.group(1)}"
+    
+    # Fallback: look for first incomplete phase
+    phase_pattern = r'🔵 Phase (\d+[\.\d]*):\s*([^\n]+)'
+    match = re.search(phase_pattern, content)
+    if match:
+        return f"Phase {match.group(1)}"
     
     return None
 
