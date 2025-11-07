@@ -36,6 +36,7 @@ from roadmapper.knowledge import (
 from roadmapper.summarize import summarize_session, generate_roadmap_summary
 from roadmapper.commits import generate_commit_message
 from roadmapper.session_close import close_session
+from roadmapper.docs import suggest_doc_updates, check_doc_consistency
 
 
 @click.group()
@@ -939,6 +940,101 @@ def close(session, no_archive, no_roadmap, no_context):
         
     except Exception as e:
         click.echo(f"❌ Error closing session: {e}", err=True)
+        sys.exit(1)
+
+
+@main.group()
+def docs():
+    """Documentation management and suggestions."""
+    pass
+
+
+@docs.command("suggest")
+@click.option(
+    "--since",
+    help="Check changes since git ref or date (e.g., HEAD~1, 2024-01-01)",
+)
+def docs_suggest(since):
+    """
+    Suggest documentation updates based on recent changes.
+    
+    Analyzes git changes and suggests when documentation might need updates.
+    """
+    try:
+        project_root = get_project_root()
+        
+        suggestions = suggest_doc_updates(project_root, since)
+        
+        if not suggestions:
+            click.echo("✅ No documentation updates suggested")
+            click.echo("   All documentation appears up to date")
+            return
+        
+        click.echo(f"📝 Found {len(suggestions)} documentation suggestion(s):\n")
+        
+        # Group by priority
+        high_priority = [s for s in suggestions if s["priority"] == "high"]
+        medium_priority = [s for s in suggestions if s["priority"] == "medium"]
+        low_priority = [s for s in suggestions if s["priority"] == "low"]
+        
+        if high_priority:
+            click.echo("🔴 High Priority:")
+            for suggestion in high_priority:
+                click.echo(f"   - {suggestion['file']}: {suggestion['message']}")
+            click.echo()
+        
+        if medium_priority:
+            click.echo("🟡 Medium Priority:")
+            for suggestion in medium_priority:
+                click.echo(f"   - {suggestion['file']}: {suggestion['message']}")
+            click.echo()
+        
+        if low_priority:
+            click.echo("🟢 Low Priority:")
+            for suggestion in low_priority:
+                click.echo(f"   - {suggestion['file']}: {suggestion['message']}")
+            click.echo()
+        
+        click.echo("💡 Tip: Use 'roadmapper summarize --roadmap' to generate roadmap summaries")
+        
+    except Exception as e:
+        click.echo(f"❌ Error suggesting documentation updates: {e}", err=True)
+        sys.exit(1)
+
+
+@docs.command("check")
+def docs_check():
+    """
+    Check documentation consistency across files.
+    
+    Verifies that status, phases, and features are consistent between
+    PROJECT_ROADMAP.md, README.md, and other documentation files.
+    """
+    try:
+        project_root = get_project_root()
+        
+        issues = check_doc_consistency(project_root)
+        
+        if not issues:
+            click.echo("✅ No documentation consistency issues found")
+            return
+        
+        click.echo(f"⚠️  Found {len(issues)} consistency issue(s):\n")
+        
+        for issue in issues:
+            priority_icon = {
+                "high": "🔴",
+                "medium": "🟡",
+                "low": "🟢",
+            }.get(issue["priority"], "⚪")
+            
+            click.echo(f"{priority_icon} {issue['file']}: {issue['message']}")
+        
+        click.echo()
+        click.echo("💡 Tip: Review and update files to maintain consistency")
+        
+    except Exception as e:
+        click.echo(f"❌ Error checking documentation: {e}", err=True)
         sys.exit(1)
 
 
