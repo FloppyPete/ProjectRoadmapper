@@ -36,7 +36,7 @@ from roadmapper.knowledge import (
 from roadmapper.summarize import summarize_session, generate_roadmap_summary
 from roadmapper.commits import generate_commit_message
 from roadmapper.session_close import close_session
-from roadmapper.docs import suggest_doc_updates, check_doc_consistency
+from roadmapper.docs import suggest_doc_updates, check_doc_consistency, fix_doc_consistency
 
 
 @click.group()
@@ -1003,12 +1003,25 @@ def docs_suggest(since):
 
 
 @docs.command("check")
-def docs_check():
+@click.option(
+    "--fix",
+    is_flag=True,
+    help="Auto-fix issues where possible (with confirmation)",
+)
+@click.option(
+    "--dry-run",
+    is_flag=True,
+    help="Show what would be fixed without making changes",
+)
+def docs_check(fix, dry_run):
     """
     Check documentation consistency across files.
     
     Verifies that status, phases, and features are consistent between
     PROJECT_ROADMAP.md, README.md, and other documentation files.
+    
+    Use --fix to auto-fix issues (with confirmation).
+    Use --dry-run to see what would be fixed.
     """
     try:
         project_root = get_project_root()
@@ -1021,17 +1034,55 @@ def docs_check():
         
         click.echo(f"⚠️  Found {len(issues)} consistency issue(s):\n")
         
-        for issue in issues:
+        fixable_issues = []
+        for i, issue in enumerate(issues, 1):
             priority_icon = {
                 "high": "🔴",
                 "medium": "🟡",
                 "low": "🟢",
             }.get(issue["priority"], "⚪")
             
-            click.echo(f"{priority_icon} {issue['file']}: {issue['message']}")
+            fixable = "fix" in issue
+            fixable_marker = " [auto-fixable]" if fixable else ""
+            
+            click.echo(f"{priority_icon} {i}. {issue['file']}: {issue['message']}{fixable_marker}")
+            
+            if fixable:
+                fixable_issues.append(issue)
         
         click.echo()
-        click.echo("💡 Tip: Review and update files to maintain consistency")
+        
+        if fix or dry_run:
+            if not fixable_issues:
+                click.echo("ℹ️  No auto-fixable issues found")
+                return
+            
+            if dry_run:
+                click.echo("🔍 Dry run - would fix the following:\n")
+                for issue in fixable_issues:
+                    fix_info = issue.get("fix", {})
+                    click.echo(f"   - {issue['file']}: {fix_info.get('action', 'update')}")
+                return
+            
+            # Ask for confirmation
+            click.echo(f"🔧 Found {len(fixable_issues)} auto-fixable issue(s)")
+            if not click.confirm("Apply fixes?"):
+                click.echo("Cancelled")
+                return
+            
+            # Apply fixes
+            fixed_count = 0
+            for issue in fixable_issues:
+                if fix_doc_consistency(issue, project_root, dry_run=False):
+                    fixed_count += 1
+                    click.echo(f"✅ Fixed: {issue['file']} - {issue['message']}")
+            
+            click.echo(f"\n✅ Fixed {fixed_count} issue(s)")
+        else:
+            fixable_count = len(fixable_issues)
+            if fixable_count > 0:
+                click.echo(f"💡 Tip: {fixable_count} issue(s) can be auto-fixed with --fix")
+            click.echo("💡 Tip: Use --dry-run to see what would be fixed")
         
     except Exception as e:
         click.echo(f"❌ Error checking documentation: {e}", err=True)

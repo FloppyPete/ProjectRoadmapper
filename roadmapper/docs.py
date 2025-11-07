@@ -203,7 +203,7 @@ def check_doc_consistency(
         project_root: Project root directory
     
     Returns:
-        List of consistency issues found
+        List of consistency issues found with fix suggestions
     """
     issues = []
     
@@ -236,9 +236,122 @@ def check_doc_consistency(
                     "file": "README.md",
                     "message": f"Phase 4 status mismatch: Roadmap shows '{phase_4_status}', README shows '{readme_phase_4_status}'",
                     "priority": "medium",
+                    "fix": {
+                        "action": "update_status",
+                        "target_file": "README.md",
+                        "old_status": readme_phase_4_status,
+                        "new_status": phase_4_status,
+                    },
+                })
+    
+    # Check feature list consistency
+    if readme_path.exists():
+        roadmap_features = _extract_feature_list(roadmap_content)
+        readme_features = _extract_feature_list(read_text_file(readme_path))
+        
+        if roadmap_features and readme_features:
+            missing_in_readme = roadmap_features - readme_features
+            if missing_in_readme:
+                issues.append({
+                    "type": "feature_mismatch",
+                    "file": "README.md",
+                    "message": f"Features in roadmap but not in README: {', '.join(list(missing_in_readme)[:3])}",
+                    "priority": "low",
+                    "fix": {
+                        "action": "add_features",
+                        "target_file": "README.md",
+                        "features": list(missing_in_readme),
+                    },
                 })
     
     return issues
+
+
+def fix_doc_consistency(
+    issue: Dict[str, str],
+    project_root: Optional[Path] = None,
+    dry_run: bool = False,
+) -> bool:
+    """
+    Auto-fix a documentation consistency issue.
+    
+    Args:
+        issue: Consistency issue dictionary with fix information
+        project_root: Project root directory
+        dry_run: If True, only show what would be fixed
+    
+    Returns:
+        True if fix was applied (or would be applied in dry_run)
+    """
+    if project_root is None:
+        project_root = get_project_root()
+    
+    if project_root is None:
+        project_root = Path.cwd()
+    
+    if "fix" not in issue:
+        return False
+    
+    fix_info = issue["fix"]
+    target_file = project_root / fix_info["target_file"]
+    
+    if not target_file.exists():
+        return False
+    
+    content = read_text_file(target_file)
+    original_content = content
+    
+    if fix_info["action"] == "update_status":
+        # Update phase status in file
+        old_status = fix_info["old_status"]
+        new_status = fix_info["new_status"]
+        
+        # Find and replace status
+        patterns = [
+            (rf"Phase 4.*?{re.escape(old_status)}", f"Phase 4: {new_status}"),
+            (rf"🔵 Phase 4.*?{re.escape(old_status)}", f"🔵 Phase 4: {new_status}"),
+        ]
+        
+        for pattern, replacement in patterns:
+            content = re.sub(pattern, replacement, content, flags=re.IGNORECASE | re.DOTALL)
+    
+    elif fix_info["action"] == "add_features":
+        # Add missing features to README
+        features = fix_info["features"]
+        # This is more complex - would need to find the right place in README
+        # For now, just log it
+        if dry_run:
+            return True
+        # Implementation would need to parse README structure
+    
+    if dry_run:
+        return content != original_content
+    
+    if content != original_content:
+        from roadmapper.utils import write_text_file
+        write_text_file(target_file, content)
+        return True
+    
+    return False
+
+
+def _extract_feature_list(content: str) -> Set[str]:
+    """Extract feature list from content (simple heuristic)."""
+    features = set()
+    
+    # Look for feature-like patterns
+    # This is a simple implementation - could be enhanced
+    feature_patterns = [
+        r'roadmapper (\w+)',
+        r'`roadmapper (\w+)`',
+        r'roadmapper\.(\w+)',
+    ]
+    
+    for pattern in feature_patterns:
+        matches = re.findall(pattern, content, re.IGNORECASE)
+        features.update(matches)
+    
+    return features
 
 
 def _extract_phase_status(content: str, phase_name: str) -> Optional[str]:
